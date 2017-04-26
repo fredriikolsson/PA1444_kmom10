@@ -1,29 +1,38 @@
 CREATE DATABASE IF NOT EXISTS ib;
 
-USE DATABASE ib;
+USE ib;
 
 CREATE TABLE IF NOT EXISTS AccountHolder(
-    INTEGER id PRIMARY KEY,
-    TEXT accountManagers,
-    FOREIGN KEY (accountManagers) REFERENCES (Manager.id)
+    id  INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    accountManagers TEXT
 );
 
-INSERT INTO AccountHolder VALUES(1);
-INSERT INTO AccountHolder VALUES(2);
-INSERT INTO AccountHolder VALUES(3);
 
+CREATE TABLE IF NOT EXISTS Manager (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    accountId INTEGER,
+    accountHolders TEXT
 
-
-
-CREATE TABLE IF NOT EXISTS Manager(
-    INTEGER id PRIMARY KEY,
-    INTEGER accountId,
-    TEXT accountHolders,
-    FOREIGN KEY(accountId) REFERENCES (Account.id),
-    FOREIGN KEY(accountHolders) REFERENCES (AccountHolder.id)
 );
 
 CREATE TABLE IF NOT EXISTS Account(
-    INTEGER id PRIMARY KEY,
-    INTEGER balance
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    balance INTEGER
 );
+
+SELECT * FROM AccountHolder;
+
+-- INSERT INTO Manager (id, accountId, accountHolders) VALUES(2 ,(SELECT id FROM Account WHERE id = 2), "1, 2");
+
+SELECT * FROM Account;
+SELECT * FROM Manager;
+
+
+SELECT * FROM AccountHolder;
+
+UPDATE AccountHolder
+SET accountManagers = (SELECT id FROM Manager
+WHERE  FIND_IN_SET(accountHolders, (SELECT id FROM AccountHolder)));
+
+SELECT * FROM Manager;
+SELECT * FROM AccountHolder;

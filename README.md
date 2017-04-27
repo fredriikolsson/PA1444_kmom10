@@ -8,8 +8,7 @@ KMOM 10 i PA1444
 # Instruktioner
 https://dbwebb.se/kurser/dbjs/projekt-internetbanken
 
-Deadline: ????????????????
-
+Deadline: 2017-05-04
 
 
 

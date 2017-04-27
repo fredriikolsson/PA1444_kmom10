@@ -63,7 +63,7 @@ END //
 
 DELIMITER ;
 
--- UPDATE AccountHolder
+-- UPDATE AccountHolder	
 -- SET accountList = "2, 34, 3, 23, 54"
 -- WHERE id = 1;
 

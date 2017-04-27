@@ -52,12 +52,34 @@ BEGIN
 DECLARE checkBalance INTEGER;
 DECLARE checkFromAccount INTEGER;
 DECLARE checkToAccount INTEGER;
+DECLARE spainMoney INTEGER;
 
 	START TRANSACTION;
-    SET checkToAccount = (SELECT accountList FROM AccountHolder WHERE FIND_IN_SET(toAccount, accountList) != 0);
-    SET checkFromAccount = (SELECT accountList FROM AccountHolder WHERE FIND_IN_SET(fromAccount, accountList) != 0);
+    -- SET checkToAccount = (SELECT accountList FROM AccountHolder WHERE FIND_IN_SET(toAccount, accountList) != 0);
+	-- SET checkFromAccount = (SELECT accountList FROM AccountHolder WHERE FIND_IN_SET(fromAccount, accountList) != 0);
     SET checkBalance = (SELECT balance FROM BankAccount WHERE id = fromAccount);
-
+    SET spainMoney = amount * 0.03;
+    
+    IF checkBalance - amount < 0 THEN
+    ROLLBACK;
+    SELECT "To small balance";
+    ELSE 
+    
+    UPDATE BankAccount
+    SET balance = balance + amount - spainMoney
+    WHERE id = toAccount;
+    
+	UPDATE BankAccount
+    SET balance = balance - amount
+    WHERE id = fromAccount;
+    
+    UPDATE BankAccount
+    SET balance = balance + spainMoney 
+    WHERE id = 1;
+    
+    COMMIT; 
+    
+    END IF;
 
 END //
 
@@ -68,5 +90,10 @@ DELIMITER ;
 -- WHERE id = 1;
 
 
+--
+-- Create Sunny Spain account
+--
+
+INSERT IGNORE INTO BankAccounts VALUES(1, 0);
 
 SELECT FIND_IN_SET(2, accountList) FROM AccountHolder ;

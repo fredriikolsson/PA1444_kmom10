@@ -1,0 +1,127 @@
+
+ .body
+ {
+    width: 100%;
+    height: 100%;
+ }
+
+.wrapper
+{
+  margin: 0 auto;
+  width: 50%;
+  position: relative;
+
+
+}
+
+.menu
+{
+  width: 10%;
+  height: 400px;
+  position: fixed;
+  margin-top: 80px;
+  margin-right: 50px;
+
+}
+
+.item
+{
+  width: 80%;
+  margin: 0 auto;
+  height: 50px;
+  margin-top: 2px;
+}
+
+
+
+.page
+{
+  width: 70%;
+  top: 0;
+  right: 20px;
+  position: absolute;
+  padding-left: 20px;
+  margin-left: 20px;
+  word-wrap: break-word;
+  -webkit-box-shadow:-1px 1px 4px #5a5a5a ;
+  -moz-box-shadow:-1px 1px 4px  #5a5a5a ;
+  box-shadow:-1px 1px 4px  #5a5a5a ;
+  background-color: rgb(255, 255, 255); /*FALLBACK */
+  background-color: rgba(255, 255, 255, 0.6);
+
+
+}
+
+
+.article
+{
+  font-family: 'Volkhov', serif;
+  font-size: 20px;
+  padding: 20px 20px 20px 20px;
+
+}
+
+.article-title p
+{
+    font-family: 'Volkhov', serif;
+    font-size: 20px;
+}
+
+.article-text p
+{
+    font-family: 'Volkhov', serif;
+    font-size: 14px;
+}
+
+.footer
+{
+    background-color: lightgrey;
+}
+
+
+
+
+.pre
+{
+    word-wrap: break-word;
+    border: 1px solid purple;
+    padding: 20px 20px 20px 20px;
+    font-size: 14px;
+    background-color: lightgrey;
+
+}
+
+
+
+
+
+table
+{
+  font-size: medium;
+    font-family: 'Roboto', serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th
+{
+    border: 1px solid #FFFFFF;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #E6E3D4;
+}
+
+.background-image
+{
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-image: url('https://wallpaperscraft.com/image/light_faded_background_85547_2560x1440.jpg');
+  z-index: -1;
+}
+

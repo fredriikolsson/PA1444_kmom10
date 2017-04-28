@@ -1,0 +1,18 @@
+
+
+Vad som ska finnas i varje interface.
+Cashier - 
+Skall finnas:
+- Lägg till en AccountHolder med all information. - createAccountHolder();
+- Lägg till ett nytt konto samt koppla det till till en accountHolder. - createBankAccount();
+- Koppla en annan accountHolder konto till ett existerande konto. - ?;
+Account Holder - 
+Skall finnas:
+- Visa alla konton som ägaren har. - SELECT;
+- Det ska synas ifall ett konto är delat med en annan ägare, isåfall ska den andra ägarens namn visas. - hör ihop med övre.
+- Skapa ett nytt konto för ägaren. - createBankAccount(); 
+- Flytta pengar mellan ägarens konton. moveMoney();
+
+Log in - 
+- Input Credentials -- Authenticate
+

@@ -119,18 +119,45 @@ CREATE PROCEDURE createBankAccount (
 )
 BEGIN
 
+      DECLARE counter INTEGER;
+      DECLARE lastId INTEGER;
+      DECLARE currentId INTEGER;
+
 	INSERT INTO BankAccount (balance, holderList) VALUES(accountBalance, aHolderList);
 	-- Walk through the holderList, and for each ID, add this BankAccount ID to that AccountHolder accountsList
 	-- USE WHILE AND SUBSTRING FUNCTIONS 
+	  SET counter = 1;
+      SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
+      SET lastId = 9999999;
+      
+      SELECT lastId, currentId;
+      
+	  WHILE lastId != currentId DO 
+      
+      SELECT "Console.log för att testa värdena";
+      SELECT currentId AS 'Current id', LAST_INSERT_ID() AS 'New id', (id = currentId) AS 'Är lika?' FROM AccountHolder;
+      
+      UPDATE AccountHolder
+		SET accountList = accountList + ',' +  LAST_INSERT_ID()
+		WHERE id = currentId + 0;
+      
+		SET lastId = currentId;
+		SET counter = counter + 1;
+        SET currentId = (SELECT substring_index(substring_index(aHolderList, ',', counter), ',', -1));
+        
+	  END WHILE;
 	
 END //
 
 DELIMITER ;
 
+
 --
 -- Create Sunny Spain account
 --
 
--- INSERT IGNORE INTO BankAccounts VALUES(1, 0);
-
-SELECT FIND_IN_SET(2, accountList) FROM AccountHolder ;
+SELECT * FROM AccountHolder;
+CALL createBankAccount(10, "2,3,4");
+SELECT * FROM BankAccount;
+SELECT LAST_INSERT_ID();
+SELECT * FROM AccountHolder;

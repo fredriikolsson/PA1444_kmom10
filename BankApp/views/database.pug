@@ -1,0 +1,18 @@
+include incl/header-database.pug
+
+p= message
+
+p The SQL was:
+pre= sql
+
+p The resultset was:
+
+each row, rownum in resultset
+    p= "Row number: " + rownum 
+    ul
+        each colvalue, colname in row
+            li= colname + ": " + colvalue
+
+- console.log(resultset)
+
+include incl/footer.pug

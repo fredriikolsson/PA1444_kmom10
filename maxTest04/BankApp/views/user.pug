@@ -1,0 +1,38 @@
+<div class="wrapper">
+<div class="page">
+include incl/header.pug
+h1.article-title
+h1= message
+p.article-text
+p  <h2>User Home Page</h2>
+p 
+p <h4>Your Information</h4>
+<table style= "width:80%">
+
+<tr><th>ID</th><th>Name</th><th>DoB</th><th>Adress</th><th>City</th><th>PIN(code)</th></tr>
+tr
+    td= object.id
+    td= object.Name
+    td= object.dateOfBirth
+    td= object.Adress
+    td= object.City
+    td= object.Code
+
+</table>
+
+p <h4>List of All Your Current accounts.<h4>
+<table style= "width:80%">
+<tr><th>ID</th><th>Balance</th><th>Owners</th></tr>
+tr
+    td= object.id
+    td= object.Balance
+    td= object.holderList
+    <td><a href="/log/#{object.id}">Create transaction</a></td>
+
+</table>
+
+p
+    
+include incl/footer.pug
+</div>
+</div>

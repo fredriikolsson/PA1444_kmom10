@@ -1,0 +1,27 @@
+include incl/header.pug
+<div class="wrapper">
+<div class="page">
+<div class="article">
+h1= message
+p <h2> Swish</h2>
+
+
+p <h5>Input necessary information.</h5>
+<form method="post" action="/home">
+    <input type="hidden" name="id" value="">
+    <p>User-id:<input type="text" name="name" value=""> *</p>
+    <p>Pin-code:<input type="text" name="name" value=""> *</p>
+    <p>From:<input type="text" name="name" value=""> *</p>
+    <p>To:<input type="text" name="name" value=""> *</p>
+    <p>Amount:<input type="text" name="name" value=""> *</p>
+
+
+    
+    
+    <input type="submit" name="doEdit" value="Save">
+    <input type="reset" value="Reset">
+</form>
+</div>
+include incl/footer.pug
+</div>
+</div>

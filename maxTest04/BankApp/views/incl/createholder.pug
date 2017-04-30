@@ -1,0 +1,30 @@
+
+<div class="wrapper">
+<div class="page">
+include incl/header.pug
+h1.article-title
+h1= message
+p.article-text
+p  <h2>Cashier Management Page</h2>
+
+<form method="post" action="/home">
+
+p <h4>Create a new Account Holder</h4>
+<input type="hidden" name="id" value="">
+<p>Name:<input type="text" name="name" value=""></p>
+<p>Date Of Birth<input type="text" name="name" value=""></p>
+<p>User-id:<input type="text" name="name" value=""></p>
+<p>Adress:<input type="text" name="name" value=""></p>
+<p>City:<input type="password" name="name" value=""></p>   
+<p>PIN(4-digits):<input type="password" name="name" value=""></p>    
+ 
+    <input type="submit" name="doEdit" value="Save">
+    <input type="reset" value="Reset">
+</form>
+
+
+p
+    
+include incl/footer.pug
+</div>
+</div>

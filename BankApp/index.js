@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 "use strict";
 
 // Get the app
@@ -10,13 +11,10 @@ const port = require("./port.js");
 const shutDown = require("./killServer.js");
 
 // Check if LINUX_PORT is found otherwise set port to 1337
-if (port.getPort() != -1)
-{
+if (port.getPort() != -1) {
     console.log(`LINUX_PORT is found and port is set to '${process.env.LINUX_PORT}'`);
     app.listen(port.getPort());
-}
-else
-{
+} else {
     console.log("LINUX_PORT is not found and port is set to 1337.");
     app.listen(1337);
 }

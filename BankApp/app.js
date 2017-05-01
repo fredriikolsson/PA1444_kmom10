@@ -1,4 +1,3 @@
-
 /**
  * App for trying out database access from MySQL
  */
@@ -21,7 +20,9 @@ app.set("view engine", "pug");
 app.locals.pretty = true;
 
 // Parsing application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // Mount static resources
 app.use(express.static(path.join(__dirname, "public")));
@@ -30,8 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", database);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next)
-{
+app.use(function(req, res, next) {
     var err = new Error("Not Found");
     err.status = 404;
     next(err);

@@ -1,3 +1,6 @@
+/**
+ * Style
+ */
 
  .body
  {
@@ -78,6 +81,42 @@
     background-color: lightgrey;
 }
 
+.flatButton
+{
+  height: 50px;
+  width: 200px;
+  margin: 2px 5px;
+  padding: 2px 16px;
+  font-size: 30px;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  transition-duration: 0.4s;
+  float: left;
+  border-radius: 5px;
+
+
+}
+
+
+
+.flatButton:hover
+{
+  background-color: #555555;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+
+.video
+{
+    max-width: 100%;
+}
+
+.image
+{
+    max-width: 100%;
+}
 
 
 
@@ -89,6 +128,12 @@
     font-size: 14px;
     background-color: lightgrey;
 
+}
+
+input
+{
+    display: inline-flex;
+    margin-bottom: 20px;
 }
 
 
@@ -124,4 +169,8 @@ tr:nth-child(even) {
   background-image: url('https://wallpaperscraft.com/image/light_faded_background_85547_2560x1440.jpg');
   z-index: -1;
 }
-
+/*
+    BLUR
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+*/

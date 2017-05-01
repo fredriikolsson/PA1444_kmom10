@@ -1,0 +1,17 @@
+include incl/header.pug
+<div class="wrapper">
+<div class="page">
+<div class="article">
+h1= message
+
+p <h4>Create a new Account</h4>
+<form method="post" action="/home">
+    <input type="hidden" name="id" value="">
+    <p>Account Name:<input type="text" name="name" value=""> *</p>
+    <input type="submit" name="doEdit" value="Save">
+    <input type="reset" value="Reset">
+</form>
+</div>
+include incl/footer.pug
+</div>
+</div>

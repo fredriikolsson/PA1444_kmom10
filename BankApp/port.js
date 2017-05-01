@@ -1,13 +1,9 @@
 "use strict";
 var port = {};
-port.getPort = () =>
-{
-    if ('LINUX_PORT' in process.env)
-    {
+port.getPort = () => {
+    if ('LINUX_PORT' in process.env) {
         return `${process.env.LINUX_PORT}`;
-    }
-    else
-    {
+    } else {
         return -1;
     }
 };

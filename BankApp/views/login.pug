@@ -1,0 +1,17 @@
+include incl/header.pug
+<div class="wrapper">
+<div class="page">
+<div class="article">
+h1= message
+<h1 class = "article-title"> LOGIN PAGE </h1>
+<form method="post" action="/home">
+    <input type="hidden" name="id" value="">
+    <p>Accountid:<input type="text" name="name" value=""></p>
+    <p>Password:<input type="password" name="local" value=""></p>
+    <input type="submit" name="doEdit" value="Save">
+    <input type="reset" value="Reset">
+</form>
+</div>
+include incl/footer.pug
+</div>
+</div>

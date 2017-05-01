@@ -8,8 +8,7 @@ const path = require("path");
 var terminal = {};
 
 
-var helptext = () =>
-{
+var helptext = () => {
     var scriptName = path.basename(process.argv[1]);
 
     console.log(`Connect to a database: ${scriptName} [hostname] [username] [password] [database]
@@ -23,14 +22,12 @@ Options:
 };
 
 
-var unknownOption = (option) =>
-{
+var unknownOption = (option) => {
     console.log(`Unknown option: ${option}
 Use --help to get an overview of the commands.`);
 };
 
-var version = () =>
-{
+var version = () => {
     console.log(VERSION);
 };
 
@@ -39,14 +36,12 @@ var version = () =>
 
 // Check incoming options.
 
-terminal.checkOptionsArguments = () =>
-{
+terminal.checkOptionsArguments = () => {
     var args = process.argv.slice(2);
     var opts = {};
     var remaining = [];
 
-    args.forEach((arg, index, array) =>
-    {
+    args.forEach((arg, index, array) => {
         switch (arg) {
             case "-h":
             case "--help":

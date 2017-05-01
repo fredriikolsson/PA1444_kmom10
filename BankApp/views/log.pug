@@ -1,3 +1,18 @@
-include incl/header-database.pug
-
+include incl/header.pug
+<div class="wrapper">
+<div class="page">
+<div class="article">
+<h1 class = "article-title"> Accounts view </h1>
+<table>
+<tr><th>Account id</th><th>Account balane</th><th>Account Holders</th></tr>
+each row, rownum in resultset
+    tr
+        td= row.id
+        td= row.timeWhen
+        td= row.accountNumber
+        td= row.balanceChanged
+</table>
+</div>
 include incl/footer.pug
+</div>
+</div>

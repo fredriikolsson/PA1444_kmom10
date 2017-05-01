@@ -7,7 +7,7 @@ USE ib;
 --
 CREATE TABLE IF NOT EXISTS AccountHolder(
     id  INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pin CHAR(4) NOT NULL, 
+    pin CHAR(4) NOT NULL,
     name VARCHAR (30),
     ssn INTEGER,
     adress VARCHAR(50),
@@ -46,7 +46,7 @@ CREATE TRIGGER UpdateAccountLog
 AFTER UPDATE ON BankAccount
 FOR EACH ROW
 BEGIN
-	INSERT INTO UpdateAccountLog (accountNumber, balanceChanged) 
+	INSERT INTO UpdateAccountLog (accountNumber, balanceChanged)
     VALUES (OLD.id, NEW.balance - OLD.balance);
 END //
 
@@ -68,12 +68,12 @@ DECLARE spainMoney INTEGER;
 	SET checkFromAccount = (SELECT FIND_IN_SET(moverId, accountList) FROM BankAccount WHERE id = toAccount);
     SET checkBalance = (SELECT balance FROM BankAccount WHERE id = fromAccount);
     SET spainMoney = amount * 0.03;
-    
+
     IF checkFromAccount != 0 AND checkToAccount != 0 THEN
 		IF checkBalance - amount < 0 THEN
 		ROLLBACK;
 		SELECT "To small balance";
-		ELSE 
+		ELSE
 
 		UPDATE BankAccount
 		SET balance = balance + amount - spainMoney
@@ -84,13 +84,13 @@ DECLARE spainMoney INTEGER;
 		WHERE id = fromAccount;
 
 		UPDATE BankAccount
-		SET balance = balance + spainMoney 
+		SET balance = balance + spainMoney
 		WHERE id = 1;
 
-		COMMIT; 
+		COMMIT;
 
 		END IF;
-	ELSE 
+	ELSE
     ROLLBACK;
     SELECT ("Account holder does not have access to one of the accounts");
     END IF;
@@ -98,7 +98,7 @@ DECLARE spainMoney INTEGER;
 END //
 
 CREATE PROCEDURE createAccountHolder (
-	newPin CHAR(4), 
+	newPin CHAR(4),
     newName VARCHAR (30),
     newSsn INTEGER,
     newAdress VARCHAR(50),
@@ -108,7 +108,7 @@ BEGIN
 
 	IF (SELECT id FROM AccountHolder WHERE ssn = newSsn) = NULL THEN
 	INSERT INTO AccountHolder (name, ssn, adress, city, pin) VALUES(newName, newSsn, newAdres, newCity, newPin);
-	ELSE 
+	ELSE
 	SELECT ("Account holder already exists");
 	END IF;
 END //
@@ -125,28 +125,30 @@ BEGIN
 
 	INSERT INTO BankAccount (balance, holderList) VALUES(accountBalance, aHolderList);
 	-- Walk through the holderList, and for each ID, add this BankAccount ID to that AccountHolder accountsList
-	-- USE WHILE AND SUBSTRING FUNCTIONS 
+	-- USE WHILE AND SUBSTRING FUNCTIONS
 	  SET counter = 1;
       SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
       SET lastId = 9999999;
-      
+
       SELECT lastId, currentId;
-      
-	  WHILE lastId != currentId DO 
-      
+
+	  WHILE lastId != currentId DO
+
       SELECT "Console.log för att testa värdena";
       SELECT currentId AS 'Current id', LAST_INSERT_ID() AS 'New id', (id = currentId) AS 'Är lika?' FROM AccountHolder;
-      
+      SELECT accountList FROM AccountHolder;
+       SELECT "Test";
       UPDATE AccountHolder
-		SET accountList = accountList + ',' +  LAST_INSERT_ID()
+		SET accountList = CONCAT(accountList, "," , LAST_INSERT_ID())
 		WHERE id = currentId + 0;
-      
+
+ SELECT "Test";
 		SET lastId = currentId;
 		SET counter = counter + 1;
         SET currentId = (SELECT substring_index(substring_index(aHolderList, ',', counter), ',', -1));
-        
+
 	  END WHILE;
-	
+
 END //
 
 DELIMITER ;

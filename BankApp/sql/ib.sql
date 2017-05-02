@@ -39,6 +39,7 @@ DROP TRIGGER IF EXISTS UpdateAccountLog;
 DROP PROCEDURE IF EXISTS moveMoney;
 DROP PROCEDURE IF EXISTS createAccountHolder;
 DROP PROCEDURE IF EXISTS createBankAccount;
+DROP PROCEDURE IF EXISTS login;
 
 DELIMITER //
 
@@ -175,6 +176,64 @@ END WHILE;
 COMMIT;
 END //
 
+CREATE PROCEDURE login(
+    theSsn INTEGER,
+    thePin CHAR(4)
+)
+BEGIN
+
+DECLARE doesExists INTEGER;
+
+SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
+pin = `,thepin,`;`));
+
+IF doesExists = NULL THEN
+SELECT "Does not exists";
+Ele(`value`) VALUES(interestValue);
+SET i = i + 1;
+
+END WHILE;
+COMMIT;
+END //
+
+CREATE PROCEDURE login(
+    theSsn INTEGER,
+    thePin CHAR(4)
+)
+BEGIN
+
+DECLARE doesExists INTEGER;
+
+SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
+pin = `,thepin,`;`));
+
+IF doesExists = NULL THEN
+SELECT "Does not exists";
+le(`value`) VALUES(interestValue);
+SET i = i + 1;
+
+END WHILE;
+COMMIT;
+END //
+
+CREATE PROCEDURE login(
+    theSsn INTEGER,
+    thePin CHAR(4)
+)
+BEGIN
+
+DECLARE doesExists INTEGER;
+
+SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
+pin = `,thepin,`;`));
+
+IF doesExists = NULL THEN
+SELECT "Does not exists";
+ELSE
+SELECT doesExists;
+
+END;
+//
 DELIMITER ;
 
 

@@ -12,11 +12,27 @@ router.get("/", (req, res) => {
     });
 });
 
+
 router.get("/login", (req, res) => {
-    res.render("login", {
-        title: "login route | express",
-        message: "$CashMoney$ Internetbank"
+    res.render(`login`, {
+        title: "Login",
+        messsage: "$CashMoney$ Internetbank"
+
     });
+});
+router.post("/loginAUTH", (req, res) => {
+    var data = {};
+
+    data.sql = `SELECT id FROM AccountHolder WHERE pin = ? AND ssn = ? ;`;
+    data.param = [req.params.pin, req.params.ssn];
+
+    database.queryPromise(data.sql, data.param)
+        .then(() => {
+            res.redirect(`/user/${req.body.id}`);
+        })
+        .catch((err) => {
+            throw err;
+        });
 });
 
 router.get("/createaccount", (req, res) => {
@@ -29,21 +45,18 @@ router.get("/createaccount", (req, res) => {
 
 
 router.get("/log", (req, res) => {
-        var data = {};
+    var data = {};
 
-        data.title = "SOME TITLE";
+    data.title = "SOME TITLE";
 
-        data.sql = `CALL moveMoney(3,2,3,1);
-        SELECT * FROM AccountLog;`;
+    data.sql = `SELECT * FROM AccountLog;`;
 
-        database.queryPromise(data.sql)
-        .then((result) =>
-        {
+    database.queryPromise(data.sql)
+        .then((result) => {
             data.resultset = result;
             res.render("log", data);
         })
-        .catch((err) =>
-        {
+        .catch((err) => {
             throw err;
         });
 
@@ -62,7 +75,7 @@ router.get("/cashier", (req, res) => {
 
     data.sql = `
 
-    SELECT * FROM a_product1;`;
+    SELECT * FROM AccountLog;`;
     data.param = [req.params.id];
 
     database.queryPromise(data.sql, data.param)
@@ -105,14 +118,14 @@ router.get("/createholder", (req, res) => {
             throw err;
         });
 });
-router.get("/user", (req, res) => {
+router.get("/user/:id", (req, res) => {
     var data = {};
 
     data.title = "SOME TITLE";
 
     data.sql = `
 
-    SELECT * FROM a_product1
+    SELECT * FROM BankAccount
 
 
     ;`;
@@ -122,10 +135,14 @@ router.get("/user", (req, res) => {
         .then((result) => {
             if (result.length) {
                 data.object = {
-                    localNumber: result[0].localNumber,
-                    number: result[0].number,
-                    id: result[0].id,
-                    text: result[0].text,                };
+                    ssn: result[0].ssn,
+                    accountList: result[0].accountList,
+                    city: result[0].city,
+                    adress: result[0].adress,
+                    name: result[0].name,
+
+                };
+
             }
             res.render("user", data);
         })
@@ -154,7 +171,8 @@ router.get("/swish", (req, res) => {
                     localNumber: result[0].localNumber,
                     number: result[0].number,
                     id: result[0].id,
-                    text: result[0].text,                };
+                    text: result[0].text
+                };
             }
             res.render("swish", data);
         })
@@ -170,7 +188,7 @@ router.get("/owners", (req, res) => {
 
     data.sql = `
 
-    SELECT * FROM a_product1
+    SELECT * FROM BankAccount
 
 
     ;`;
@@ -183,7 +201,8 @@ router.get("/owners", (req, res) => {
                     localNumber: result[0].localNumber,
                     number: result[0].number,
                     id: result[0].id,
-                    text: result[0].text,                };
+                    text: result[0].text,
+                };
             }
             res.render("owners", data);
         })

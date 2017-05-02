@@ -3,11 +3,11 @@ include incl/header.pug
 <div class="page">
 <div class="article">
 h1= message
-<h1 class = "article-title"> LOGIN PAGE </h1>
-<form method="post" action="/home">
+<h1 class = "article-title"> Login Page </h1>
+<form method="post" action="/loginAUTH">
     <input type="hidden" name="id" value="">
-    <p>Accountid:<input type="text" name="name" value=""></p>
-    <p>Password:<input type="password" name="local" value=""></p>
+    <p>SSN:<input type="text" name="ssn" value=""></p>
+    <p>PIN:<input type="password" name="pin" value=""></p>
     <input type="submit" name="doEdit" value="Save">
     <input type="reset" value="Reset">
 </form>

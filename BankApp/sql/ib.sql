@@ -64,12 +64,12 @@ DECLARE checkToAccount INTEGER;
 DECLARE spainMoney INTEGER;
 
 	START TRANSACTION;
-    SET checkToAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = fromAccount);
-	SET checkFromAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = toAccount);
+    -- SET checkToAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = fromAccount);
+	-- SET checkFromAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = toAccount);
     SET checkBalance = (SELECT balance FROM BankAccount WHERE id = fromAccount);
     SET spainMoney = amount * 0.03;
 
-    IF checkFromAccount != 0 AND checkToAccount != 0 THEN
+    -- IF checkFromAccount != 0 AND checkToAccount != 0 THEN
 		IF checkBalance - amount < 0 THEN
 		ROLLBACK;
 		SELECT "To small balance";
@@ -90,10 +90,10 @@ DECLARE spainMoney INTEGER;
 		COMMIT;
 
 		END IF;
-	ELSE
-    ROLLBACK;
-    SELECT ("Account holder does not have access to one of the accounts");
-    END IF;
+    	-- ELSE
+        -- ROLLBACK;
+        -- SELECT ("Account holder does not have access to one of the accounts");
+        -- END IF;
 
 END //
 

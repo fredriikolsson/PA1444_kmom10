@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS Cashier;
 --
 CREATE TABLE Cashier(
     id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pin (4) NOT NULL
-)
+    pin INT(4) NOT NULL
+);
 --
 -- Ägareuppgifter
 --
@@ -53,6 +53,11 @@ DROP PROCEDURE IF EXISTS createAccountHolder;
 DROP PROCEDURE IF EXISTS createBankAccount;
 DROP PROCEDURE IF EXISTS calculateInterest;
 DROP PROCEDURE IF EXISTS login;
+DROP PROCEDURE IF EXISTS loginCashier;
+DROP PROCEDURE IF EXISTS getName;
+DROP PROCEDURE IF EXISTS filLDB;
+DROP VIEW IF EXISTS namesFromAccount;
+
 
 DELIMITER //
 
@@ -269,7 +274,7 @@ ELSE
 SELECT * FROM Cashier WHERE id = doesExists;
 END IF;
 END;
-//rie för forskningen om radioaktivitet. Hon var därmed den första kvinnliga nobelpristagaren. 1911 fick hon sitt andra nobelpris, denna gång i kemi för upptäckten av
+//
 
 CREATE PROCEDURE fillDB()
 BEGIN
@@ -279,7 +284,7 @@ BEGIN
     -- Insert all Users --
     INSERT INTO AccountHolder(name, ssn, adress, city, pin)
     VALUES
-    ("DinaPengaÄrMinaPengar", 201705021456, "Nytt hus", "Nästan i Spanien", 1337)
+    ("DinaPengaÄrMinaPengar", 201705021456, "Nytt hus", "Nästan i Spanien", 1337),
     ("Marie Curie", 186711071337, "Radium road", "Warzawa", 1867),
     ("Max Karlson", 199612318456, "Annebovägen 2", "Karlskrona", 1111),
     ("Dennis Fransson", 199412158860, "Räddisogatan 93", "Skogsta", 8932),
@@ -302,12 +307,11 @@ CREATE PROCEDURE getName(
     accountId INT
 )
 BEGIN
-        DROP VIEW IF EXISTS namesFromAccount;
         CREATE VIEW namesFromAccount(
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(25),
+            viewId INT PRIMARY KEY AUTO_INCREMENT,
+            'theName' VARCHAR(25),
             nameId INT
-        )
+        );
 
         SET counter = 1;
         SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
@@ -340,4 +344,6 @@ DELIMITER ;
 -- SELECT LAST_INSERT_ID();
 -- SELECT * FROM AccountHolder;
 
-CALL login(1337, "1111");
+-- CALL login(1337, "1111");
+
+CALL fillDB();

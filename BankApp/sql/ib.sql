@@ -39,6 +39,7 @@ DROP TRIGGER IF EXISTS UpdateAccountLog;
 DROP PROCEDURE IF EXISTS moveMoney;
 DROP PROCEDURE IF EXISTS createAccountHolder;
 DROP PROCEDURE IF EXISTS createBankAccount;
+DROP PROCEDURE IF EXISTS calculateInterest;
 DROP PROCEDURE IF EXISTS login;
 
 DELIMITER //
@@ -94,7 +95,7 @@ DECLARE spainMoney INTEGER;
 	-- ELSE
     -- ROLLBACK;
     -- SELECT ("Account holder does not have access to one of the accounts");
-    END IF;
+    -- END IF;
 
 END //
 
@@ -176,6 +177,46 @@ END WHILE;
 COMMIT;
 END //
 
+-- CREATE PROCEDURE login(
+--     theSsn INTEGER,
+--     thePin CHAR(4)
+-- )
+-- BEGIN
+--
+-- DECLARE doesExists INTEGER;
+--
+-- SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
+-- pin = `,thepin,`;`));
+--
+-- IF doesExists = NULL THEN
+-- SELECT "Does not exists";
+-- Ele(`value`) VALUES(interestValue);
+-- SET i = i + 1;
+--
+-- END WHILE;
+-- COMMIT;
+-- END //
+--
+-- CREATE PROCEDURE login(
+--     theSsn INTEGER,
+--     thePin CHAR(4)
+-- )
+-- BEGIN
+--
+-- DECLARE doesExists INTEGER;
+--
+-- SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
+-- pin = `,thepin,`;`));
+--
+-- IF doesExists = NULL THEN
+-- SELECT "Does not exists";
+-- le(`value`) VALUES(interestValue);
+-- SET i = i + 1;
+--
+-- END WHILE;
+-- COMMIT;
+-- END //
+
 CREATE PROCEDURE login(
     theSsn INTEGER,
     thePin CHAR(4)
@@ -184,54 +225,16 @@ BEGIN
 
 DECLARE doesExists INTEGER;
 
-SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
-pin = `,thepin,`;`));
-
-IF doesExists = NULL THEN
-SELECT "Does not exists";
-Ele(`value`) VALUES(interestValue);
-SET i = i + 1;
-
-END WHILE;
-COMMIT;
-END //
-
-CREATE PROCEDURE login(
-    theSsn INTEGER,
-    thePin CHAR(4)
-)
-BEGIN
-
-DECLARE doesExists INTEGER;
-
-SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
-pin = `,thepin,`;`));
-
-IF doesExists = NULL THEN
-SELECT "Does not exists";
-le(`value`) VALUES(interestValue);
-SET i = i + 1;
-
-END WHILE;
-COMMIT;
-END //
-
-CREATE PROCEDURE login(
-    theSsn INTEGER,
-    thePin CHAR(4)
-)
-BEGIN
-
-DECLARE doesExists INTEGER;
-
-SET doesExists = (CONCAT(`SELECT id FROM AccountHolder WHERE ssn = `,theSsn,` AND
-pin = `,thepin,`;`));
+SET @anSsn = theSsn;
+SET @aPin = thePin;
+SET doesExists = (SELECT id FROM AccountHolder WHERE ssn = @anSsn AND
+pin = @aPin);
 
 IF doesExists = NULL THEN
 SELECT "Does not exists";
 ELSE
-SELECT doesExists;
-
+SELECT * FROM AccountHolder WHERE id = doesExists;
+END IF;
 END;
 //
 DELIMITER ;
@@ -241,8 +244,10 @@ DELIMITER ;
 -- Create Sunny Spain account
 --
 
-SELECT * FROM AccountHolder;
-CALL createBankAccount(10, "2,3,4");
-SELECT * FROM BankAccount;
-SELECT LAST_INSERT_ID();
-SELECT * FROM AccountHolder;
+-- SELECT * FROM AccountHolder;
+-- CALL createBankAccount(10, "2,3,4");
+-- SELECT * FROM BankAccount;
+-- SELECT LAST_INSERT_ID();
+-- SELECT * FROM AccountHolder;
+
+CALL login(1337, "1111");

@@ -23,11 +23,26 @@ router.get("/login", (req, res) => {
 router.post("/loginAUTH", (req, res) => {
     var data = {};
 
-    data.sql = `SELECT id FROM AccountHolder WHERE pin = ? AND ssn = ? ;`;
-    data.param = [req.params.pin, req.params.ssn];
+    data.sql = `CALL login(?, ?);`;
+    data.param = [req.body.ssn, req.body.pin];
+    // console.log(req.param);
+    // console.log(data.param);
+
+    console.log("Req respectively res");
+    console.log(req);
+    console.log(res);
+
+    console.log(req.body.ssn + " ----------------------------------------------------------- "+  req.body.id);
+    console.log(req.body);
+    console.log(data.sql);
+    console.log(data);
 
     database.queryPromise(data.sql, data.param)
-        .then(() => {
+        .then((result) => {
+            console.log(result);
+            console.log(result.id)
+            console.log(result[0].id)
+            console.log(req.body.id);
             res.redirect(`/user/${req.body.id}`);
         })
         .catch((err) => {
@@ -123,12 +138,7 @@ router.get("/user/:id", (req, res) => {
 
     data.title = "SOME TITLE";
 
-    data.sql = `
-
-    SELECT * FROM BankAccount
-
-
-    ;`;
+    data.sql = "SELECT * FROM BankAccount WHERE id = ?";
     data.param = [req.params.id];
 
     database.queryPromise(data.sql, data.param)

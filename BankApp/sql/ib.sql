@@ -2,14 +2,26 @@ CREATE DATABASE IF NOT EXISTS ib;
 
 USE ib;
 
+DROP TABLE IF EXISTS AccountHolder;
+DROP TABLE IF EXISTS BankAccount;
+DROP TABLE IF EXISTS AccountLog;
+DROP TABLE IF EXISTS Cashier;
+
+--
+-- Cashier
+--
+CREATE TABLE Cashier(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    pin (4) NOT NULL
+)
 --
 -- Ägareuppgifter
 --
 CREATE TABLE IF NOT EXISTS AccountHolder(
     id  INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pin CHAR(4) NOT NULL,
+    pin INTEGER(4) NOT NULL,
     name VARCHAR (30),
-    ssn INTEGER,
+    ssn INTEGER UNIQUE,
     adress VARCHAR(50),
     city VARCHAR(50),
     accountList TEXT
@@ -219,7 +231,7 @@ END //
 
 CREATE PROCEDURE login(
     theSsn INTEGER,
-    thePin CHAR(4)
+    thePin INTEGER(4)
 )
 BEGIN
 
@@ -236,6 +248,84 @@ ELSE
 SELECT * FROM AccountHolder WHERE id = doesExists;
 END IF;
 END;
+//
+
+CREATE PROCEDURE loginCashier(
+    theId INTEGER,
+    thePin INT(4)
+)
+BEGIN
+
+DECLARE doesExists INTEGER;
+
+SET @anSsn = theId;
+SET @aPin = thePin;
+SET doesExists = (SELECT id FROM Cashier WHERE id = @anSsn AND
+pin = @aPin);
+
+IF doesExists = NULL THEN
+SELECT "Does not exists";
+ELSE
+SELECT * FROM Cashier WHERE id = doesExists;
+END IF;
+END;
+//rie för forskningen om radioaktivitet. Hon var därmed den första kvinnliga nobelpristagaren. 1911 fick hon sitt andra nobelpris, denna gång i kemi för upptäckten av
+
+CREATE PROCEDURE fillDB()
+BEGIN
+    -- Sunny spain account --
+    INSERT INTO BankAccount (id, balance, holderList) VALUES(1, 100000, 1);
+
+    -- Insert all Users --
+    INSERT INTO AccountHolder(name, ssn, adress, city, pin)
+    VALUES
+    ("DinaPengaÄrMinaPengar", 201705021456, "Nytt hus", "Nästan i Spanien", 1337)
+    ("Marie Curie", 186711071337, "Radium road", "Warzawa", 1867),
+    ("Max Karlson", 199612318456, "Annebovägen 2", "Karlskrona", 1111),
+    ("Dennis Fransson", 199412158860, "Räddisogatan 93", "Skogsta", 8932),
+    ("Anna Ullared", 196409085412, "Ullaredsstigen 54", "Ullared", 4321),
+    ("Felicia Förödaren", 197402239999, "Mördarbo 43", "Hellabo", 1654),
+    ("Viktor Tricksman", 200301016161, "Yllegatan 86", "Körskär", 6754),
+    ("Inga-Britta Gunnarson", 183205311010, "Kyrkogårdsvägen 1", "Dödsbo", 9999),
+    ("Greta Garbo", 190509181990, "Jungfrugatan 5", "Stockholm", 1999),
+    ("Helena Von Nattuggla", 195405043434, "Bingebonge 19","Kitkatskogen", 4337),
+    ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604);
+
+    INSERT INTO BankAccount (balance, holderList)
+    VALUES
+    (15, "2");
+
+END
+//
+
+CREATE PROCEDURE getName(
+    accountId INT
+)
+BEGIN
+        DROP VIEW IF EXISTS namesFromAccount;
+        CREATE VIEW namesFromAccount(
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(25),
+            nameId INT
+        )
+
+        SET counter = 1;
+        SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
+        SET lastId = 9999999;
+
+        SELECT lastId, currentId;
+
+  	  WHILE lastId != currentId DO
+        INSERT INTO namesFromAccount (name, nameId) VALUES((SELECT name FROM AccountHolder WHERE id = currentId), currentId);
+  		SET lastId = currentId;
+  		SET counter = counter + 1;
+        SET currentId = (SELECT substring_index(substring_index(aHolderList, ',', counter), ',', -1));
+  	  END WHILE;
+
+      SELECT * FROM namesFromAccount;
+
+
+END
 //
 DELIMITER ;
 

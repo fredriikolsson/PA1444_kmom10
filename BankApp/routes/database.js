@@ -22,32 +22,36 @@ router.get("/login", (req, res) => {
 });
 router.post("/loginAUTH", (req, res) => {
     var data = {};
-
-    data.sql = `CALL login(?, ?);`;
-    data.param = [req.body.ssn, req.body.pin];
-    // console.log(req.param);
-    // console.log(data.param);
-
-    console.log("Req respectively res");
-    console.log(req);
-    console.log(res);
-
-    console.log(req.body.ssn + " ----------------------------------------------------------- "+  req.body.id);
-    console.log(req.body);
-    console.log(data.sql);
-    console.log(data);
-
+    var data2 = {};
+    var fudbwebb;
+    data.sql = `CALL login(${req.body.ssn}, ${req.body.pin})`;
     database.queryPromise(data.sql, data.param)
         .then((result) => {
-            console.log(result);
-            console.log(result.id)
-            console.log(result[0].id)
-            console.log(req.body.id);
-            res.redirect(`/user/${req.body.id}`);
+            data.object = {
+                id: result[0]
+
+            };
+            fudbwebb = JSON.stringify(result[0]).split("").reverse().join("").substring(2, 3);
+            //console.log("----" + JSON.stringify(result[0]).split("").reverse().join("").substring(2,3))
+            data2.sql = `SELECT * FROM AccountHolder WHERE id = ` + fudbwebb + `;`;
+
+            database.queryPromise(data2.sql, data2.param)
+                .then(() => {
+                    res.redirect(`/user/` + fudbwebb);
+                })
+                .catch((err) => {
+                    throw err;
+                });
+
         })
         .catch((err) => {
             throw err;
         });
+    //data2.sql = `SELECT * FROM AccountHolder WHERE id = ` + fudbwebb + `;`;
+
+    //data.param = [req.body.id, req.body.ssn, req.body.pin];
+
+
 });
 
 router.get("/createaccount", (req, res) => {
@@ -135,10 +139,11 @@ router.get("/createholder", (req, res) => {
 });
 router.get("/user/:id", (req, res) => {
     var data = {};
-
+    var data2 = {};
     data.title = "SOME TITLE";
 
-    data.sql = "SELECT * FROM BankAccount WHERE id = ?";
+    data.sql = `SELECT ssn, accountList, city, adress, name FROM AccountHolder WHERE id = ?;`;
+
     data.param = [req.params.id];
 
     database.queryPromise(data.sql, data.param)
@@ -152,9 +157,23 @@ router.get("/user/:id", (req, res) => {
                     name: result[0].name,
 
                 };
-
             }
-            res.render("user", data);
+            data2.sql = `SELECT balance, holderList FROM BankAccount WHERE holderList LIKE ` + `'%${req.params.id}%'` + `;`;
+            database.queryPromise(data2.sql, data2.param)
+                .then((result2) => {
+                    if (result.length) {
+                        console.log("RESULTSSS");
+                        data.accounts = {
+                            balance: result2[0].balance,
+                            accountHolders: result2[0].holderList
+                        };
+                    }
+                    res.render("user", data);
+                })
+                .catch((err) => {
+                    throw err;
+                });
+
         })
         .catch((err) => {
             throw err;

@@ -377,5 +377,3 @@ DELIMITER ;
 -- CALL login(1337, "1111");
 
 CALL fillDB();
-SELECT * FROM BankAccount;
-CALL getName(12);

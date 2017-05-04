@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS AccountHolder(
     id  INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     pin INTEGER(4) NOT NULL,
     name VARCHAR (30),
-    ssn INTEGER UNIQUE,
+    ssn BIGINT UNIQUE,
     adress VARCHAR(50),
     city VARCHAR(50),
     accountList TEXT
@@ -56,8 +56,15 @@ DROP PROCEDURE IF EXISTS login;
 DROP PROCEDURE IF EXISTS loginCashier;
 DROP PROCEDURE IF EXISTS getName;
 DROP PROCEDURE IF EXISTS filLDB;
-DROP VIEW IF EXISTS namesFromAccount;
+DROP PROCEDURE IF EXISTS removeFromNFA;
 
+DROP TABLE IF EXISTS namesFromAccount;
+
+CREATE TABLE namesFromAccount(
+	viewId INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(25),
+	nameId INT
+);
 
 DELIMITER //
 
@@ -119,7 +126,7 @@ END //
 CREATE PROCEDURE createAccountHolder (
 	newPin CHAR(4),
     newName VARCHAR (30),
-    newSsn INTEGER,
+    newSsn BIGINT,
     newAdress VARCHAR(50),
     newCity VARCHAR(50)
 )
@@ -235,7 +242,7 @@ END //
 -- END //
 
 CREATE PROCEDURE login(
-    theSsn INTEGER,
+    theSsn BIGINT,
     thePin INTEGER(4)
 )
 BEGIN
@@ -293,31 +300,54 @@ BEGIN
     ("Viktor Tricksman", 200301016161, "Yllegatan 86", "Körskär", 6754),
     ("Inga-Britta Gunnarson", 183205311010, "Kyrkogårdsvägen 1", "Dödsbo", 9999),
     ("Greta Garbo", 190509181990, "Jungfrugatan 5", "Stockholm", 1999),
-    ("Helena Von Nattuggla", 195405043434, "Bingebonge 19","Kitkatskogen", 4337),
+    ("Helena Von Nattuggla", 195405043434, "Bingebongevägen 19","Kitkatskogen", 4337),
     ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604);
 
     INSERT INTO BankAccount (balance, holderList)
     VALUES
-    (15, "2");
+    (1543, "2"),
+    (12534, "8"),
+    (134515, "3"),
+    (65415, "6"),
+    (6515, "10"),
+    (8815, "9"),
+    (515, "7"),
+    (8315, "4"),
+    (54152345, "5"),
+    (96154325, "11"),
+    (11154, "2,5,8"),
+    (333, "2,9,11"),
+    (15, "9,10,11");
 
 END
+//
+
+--
+-- CALL ON THIS EVERYTIME YOU CALL getName(accountId);
+--
+CREATE PROCEDURE removeFromNFA()
+BEGIN
+		TRUNCATE namesFromAccount;
+END
+
 //
 
 CREATE PROCEDURE getName(
     accountId INT
 )
 BEGIN
-        CREATE VIEW namesFromAccount(
-            viewId INT PRIMARY KEY AUTO_INCREMENT,
-            'theName' VARCHAR(25),
-            nameId INT
-        );
+
+        DECLARE counter INT;
+        DECLARE currentId INT;
+        DECLARE lastId INT;
+        DECLARE aHolderList TEXT;
+
 
         SET counter = 1;
+		SET aHolderList = (SELECT holderList FROM BankAccount WHERE id = accountId);
         SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
         SET lastId = 9999999;
 
-        SELECT lastId, currentId;
 
   	  WHILE lastId != currentId DO
         INSERT INTO namesFromAccount (name, nameId) VALUES((SELECT name FROM AccountHolder WHERE id = currentId), currentId);
@@ -347,3 +377,5 @@ DELIMITER ;
 -- CALL login(1337, "1111");
 
 CALL fillDB();
+SELECT * FROM BankAccount;
+CALL getName(12);

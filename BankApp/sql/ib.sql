@@ -55,6 +55,7 @@ DROP PROCEDURE IF EXISTS calculateInterest;
 DROP PROCEDURE IF EXISTS login;
 DROP PROCEDURE IF EXISTS loginCashier;
 DROP PROCEDURE IF EXISTS getName;
+DROP PROCEDURE IF EXISTS getTheNames;
 DROP PROCEDURE IF EXISTS filLDB;
 DROP PROCEDURE IF EXISTS removeFromNFA;
 DROP PROCEDURE IF EXISTS swish;
@@ -333,11 +334,11 @@ END
 
 //
 
-CREATE PROCEDURE getName(
+CREATE PROCEDURE getTheNames(
     accountId INT
 )
 BEGIN
-
+		
         DECLARE counter INT;
         DECLARE currentId INT;
         DECLARE lastId INT;
@@ -410,6 +411,14 @@ DECLARE spainMoney INTEGER;
     -- END IF;
 END;
 // 
+
+CREATE PROCEDURE getName() 
+BEGIN
+
+CALL removeFromNFA();
+CALL getTheNames();
+
+END
 DELIMITER ;
 
 

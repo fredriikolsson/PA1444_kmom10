@@ -290,19 +290,19 @@ BEGIN
     INSERT INTO BankAccount (id, balance, holderList) VALUES(1, 100000, 1);
 
     -- Insert all Users --
-    INSERT INTO AccountHolder(name, ssn, adress, city, pin)
+    INSERT INTO AccountHolder(name, ssn, adress, city, pin, accountList)
     VALUES
-    ("DinaPengaÄrMinaPengar", 201705021456, "Nytt hus", "Nästan i Spanien", 1337),
-    ("Marie Curie", 186711071337, "Radium road", "Warzawa", 1867),
-    ("Max Karlson", 199612318456, "Annebovägen 2", "Karlskrona", 1111),
-    ("Dennis Fransson", 199412158860, "Räddisogatan 93", "Skogsta", 8932),
-    ("Anna Ullared", 196409085412, "Ullaredsstigen 54", "Ullared", 4321),
-    ("Felicia Förödaren", 197402239999, "Mördarbo 43", "Hellabo", 1654),
-    ("Viktor Tricksman", 200301016161, "Yllegatan 86", "Körskär", 6754),
-    ("Inga-Britta Gunnarson", 183205311010, "Kyrkogårdsvägen 1", "Dödsbo", 9999),
-    ("Greta Garbo", 190509181990, "Jungfrugatan 5", "Stockholm", 1999),
-    ("Helena Von Nattuggla", 195405043434, "Bingebongevägen 19","Kitkatskogen", 4337),
-    ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604);
+    ("DinaPengaÄrMinaPengar", 201705021456, "Nytt hus", "Nästan i Spanien", 1337, "1"),
+    ("Marie Curie", 186711071337, "Radium road", "Warzawa", 1867, "2,12,13"),
+    ("Max Karlson", 199612318456, "Annebovägen 2", "Karlskrona", 1111, "4"),
+    ("Dennis Fransson", 199412158860, "Räddisogatan 93", "Skogsta", 8932,"9"),
+    ("Anna Ullared", 196409085412, "Ullaredsstigen 54", "Ullared", 4321, "10,12"),
+    ("Felicia Förödaren", 197402239999, "Mördarbo 43", "Hellabo", 1654, "5"),
+    ("Viktor Tricksman", 200301016161, "Yllegatan 86", "Körskär", 6754, "8"),
+    ("Inga-Britta Gunnarson", 183205311010, "Kyrkogårdsvägen 1", "Dödsbo", 9999, "12,3"),
+    ("Greta Garbo", 190509181990, "Jungfrugatan 5", "Stockholm", 1999, "7,13,14"),
+    ("Helena Von Nattuggla", 195405043434, "Bingebongevägen 19","Kitkatskogen", 4337, "6,14"),
+    ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604, "11,13,14");
 
     INSERT INTO BankAccount (balance, holderList)
     VALUES

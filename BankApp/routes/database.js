@@ -131,9 +131,8 @@ router.get("/user/:id", (req, res) => {
 
                 };
             }
-<<<<<<< HEAD
                 res.render("user", data);
-=======
+
             data2.sql = `SELECT balance, holderList FROM BankAccount WHERE holderList LIKE ` + `'%${req.params.id}%'` + `;`;
             database.queryPromise(data2.sql, data2.param)
                 .then((result2) => {
@@ -146,7 +145,6 @@ router.get("/user/:id", (req, res) => {
                     throw err;
                 });
 
->>>>>>> bcc18b349bb069bbd5c2ac659ca9f0cdbc66649f
         })
         .catch((err) => {
             throw err;

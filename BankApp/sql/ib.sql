@@ -412,13 +412,16 @@ DECLARE spainMoney INTEGER;
 END;
 // 
 
-CREATE PROCEDURE getName() 
+CREATE PROCEDURE getName(
+	nameId INT
+) 
 BEGIN
 
 CALL removeFromNFA();
-CALL getTheNames();
+CALL getTheNames(nameId);
 
-END
+END // 
+
 DELIMITER ;
 
 

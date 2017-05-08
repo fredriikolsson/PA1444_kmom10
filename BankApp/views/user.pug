@@ -1,11 +1,12 @@
 <div class="wrapper">
 <div class="page">
 include incl/header.pug
+if object
 h1.article-title
 h1= message
 p.article-text
 p  <h2>User Home Page</h2>
-p 
+p
 p <h4>Your Information</h4>
 <table style= "width:80%">
 
@@ -18,10 +19,20 @@ tr
     td= object.accountList
 </table>
 
+p <h4>Your Accounts</h4>
+<table style= "width:80%">
+<tr><th>balance</th><th>account holders</th></tr>
+tr
+    td= accounts.balance
+    td= accounts.accountHolders
+</table>
+
+<p><a href="/swish">Swish money</a></p>
+<p><a href="/swish">Create a new bank acount</a></p>
+<p><a href="/swish">Create a new bank acount</a></p>
 
 
-p
-    
+
 include incl/footer.pug
 </div>
 </div>

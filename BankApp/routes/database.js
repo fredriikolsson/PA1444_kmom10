@@ -32,7 +32,6 @@ router.post("/loginAUTH", (req, res) => {
 
             };
             fudbwebb = JSON.stringify(result[0]).split("").reverse().join("").substring(2, 3);
-            //console.log("----" + JSON.stringify(result[0]).split("").reverse().join("").substring(2,3))
             data2.sql = `SELECT * FROM AccountHolder WHERE id = ` + fudbwebb + `;`;
 
             database.queryPromise(data2.sql, data2.param)
@@ -47,11 +46,6 @@ router.post("/loginAUTH", (req, res) => {
         .catch((err) => {
             throw err;
         });
-    //data2.sql = `SELECT * FROM AccountHolder WHERE id = ` + fudbwebb + `;`;
-
-    //data.param = [req.body.id, req.body.ssn, req.body.pin];
-
-
 });
 
 router.get("/createaccount", (req, res) => {
@@ -78,11 +72,6 @@ router.get("/log", (req, res) => {
         .catch((err) => {
             throw err;
         });
-
-    // res.render("log", {
-    //     title: "Log route | express",
-    //     message: "$CashMoney$ Internetbank"
-    // });
 });
 
 
@@ -93,17 +82,11 @@ router.get("/cashier", (req, res) => {
     data.title = "SOME TITLE";
 
     data.sql = `
+    SELECT * FROM BankAccount;`;
 
-    SELECT * FROM AccountLog;`;
-    data.param = [req.params.id];
-
-    database.queryPromise(data.sql, data.param)
+    database.queryPromise(data.sql)
         .then((result) => {
-            if (result.length) {
-                data.object = {
-                    // SOME DATA
-                };
-            }
+            data.resultset = result;
             res.render("cashier", data);
         })
         .catch((err) => {
@@ -112,15 +95,14 @@ router.get("/cashier", (req, res) => {
 });
 
 
+
 router.get("/createholder", (req, res) => {
     var data = {};
 
     data.title = "SOME TITLE";
 
     data.sql = `
-
-    SELECT * FROM a_product1
-
+    SELECT * FROM AccountHolder;
     ;`;
     data.param = [req.params.id];
 
@@ -162,7 +144,6 @@ router.get("/user/:id", (req, res) => {
             database.queryPromise(data2.sql, data2.param)
                 .then((result2) => {
                     if (result.length) {
-                        console.log("RESULTSSS");
                         data.accounts = {
                             balance: result2[0].balance,
                             accountHolders: result2[0].holderList
@@ -186,10 +167,7 @@ router.get("/swish", (req, res) => {
     data.title = "SOME TITLE";
 
     data.sql = `
-
-    SELECT * FROM a_product1
-
-
+    SELECT * FROM BankAccount
     ;`;
     data.param = [req.params.id];
 
@@ -210,28 +188,22 @@ router.get("/swish", (req, res) => {
         });
 });
 
-router.get("/owners", (req, res) => {
+router.post("/owners", (req, res) => {
     var data = {};
 
     data.title = "SOME TITLE";
 
     data.sql = `
+    UPDATE BankAccount
+    SET BankAccount.holderList = ?
+    WHERE BankAccount.id = ?;`;
 
-    SELECT * FROM BankAccount
-
-
-    ;`;
-    data.param = [req.params.id];
+    data.param = [req.body.id, req.body.balance, req.body.holderList];
 
     database.queryPromise(data.sql, data.param)
         .then((result) => {
             if (result.length) {
-                data.object = {
-                    localNumber: result[0].localNumber,
-                    number: result[0].number,
-                    id: result[0].id,
-                    text: result[0].text,
-                };
+                res.redirect(`/owners/${req.body.id}`);
             }
             res.render("owners", data);
         })
@@ -240,18 +212,21 @@ router.get("/owners", (req, res) => {
         });
 });
 
-
-
-router.post("/xxx", (req, res) => {
+router.get("/owners/:id", (req, res) => {
     var data = {};
 
-    data.sql = `SELECT * FROM a_product1;`;
-    console.log(req.body);
-    data.param = ["PARAMETERS"];
+    data.sql = `SELECT name FROM accountHolder WHERE id = ? ;`;
+    data.param = [req.params.id];
 
     database.queryPromise(data.sql, data.param)
-        .then(() => {
-            res.redirect(`/owners/${req.body.id}`);
+        .then((result) => {
+            if (result.length) {
+                data.object = {
+                    name: result[0].name
+                };
+            }
+            res.render("owners", data);
+
         })
         .catch((err) => {
             throw err;

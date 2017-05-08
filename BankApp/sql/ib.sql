@@ -303,7 +303,8 @@ BEGIN
     ("Inga-Britta Gunnarson", 183205311010, "Kyrkogårdsvägen 1", "Dödsbo", 9999, "12,3"),
     ("Greta Garbo", 190509181990, "Jungfrugatan 5", "Stockholm", 1999, "7,13,14"),
     ("Helena Von Nattuggla", 195405043434, "Bingebongevägen 19","Kitkatskogen", 4337, "6,14"),
-    ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604, "11,13,14");
+    ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604, "11,13,14"),
+    ("Hakan", 1, "Hej", "Då", 1111, "5");
 
     INSERT INTO BankAccount (balance, holderList)
     VALUES
@@ -338,13 +339,13 @@ CREATE PROCEDURE getTheNames(
     accountId INT
 )
 BEGIN
-		
+
         DECLARE counter INT;
         DECLARE currentId INT;
         DECLARE lastId INT;
         DECLARE aHolderList TEXT;
-		
-        
+
+
         SET counter = 1;
 		SET aHolderList = (SELECT holderList FROM BankAccount WHERE id = accountId);
         SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
@@ -410,17 +411,17 @@ DECLARE spainMoney INTEGER;
     -- SELECT ("Account holder does not have access to one of the accounts");
     -- END IF;
 END;
-// 
+//
 
 CREATE PROCEDURE getName(
 	nameId INT
-) 
+)
 BEGIN
 
 CALL removeFromNFA();
 CALL getTheNames(nameId);
 
-END // 
+END //
 
 DELIMITER ;
 

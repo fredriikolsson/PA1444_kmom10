@@ -6,22 +6,21 @@ h1= message
 p.article-text
 p  <h2>Cashier Management Page</h2>
 p 
-<p>Create a new Holder - <a href="/createholder/#{object.id}">Here.</a></p>
-
-<p>Create a new Account - <a href="/createaccount/#{object.id}">Here.</a></p>
+<p>Create a new Holder - <a href="/createholder/">Here.</a></p>
+<p>Create a new Account - <a href="/createaccount/">Here.</a></p>
 
 p <h4>List of All Currently existing Account.<h4>
-
 <table>
 <tr><th>ID</th><th>Balance</th><th>Owners</th></tr>
-tr
-    td= object.id
-    td= object.Balance
-    td= object.holderList
-    <td><a href="/owners/#{object.id}">Edit Owners</a></td>
+each row, rownum in resultset
+    tr
+        td= row.id   
+        td= row.balance
+        td= row.holderList
+        <td><a href="/owners/"</a>Edit Owners</td>
 </table>
 
-    
+
 include incl/footer.pug
 </div>
 </div>

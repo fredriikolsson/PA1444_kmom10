@@ -1,4 +1,16 @@
 include incl/header-database.pug
 
+if object
+    p Transactions.
+
+    <form method="post" action="/db/transaction">
+
+    </form>
+else
+    p No match.
+
+<p><a href="/db/cashier">Cashier</a></p>
+
+- console.log(object)
 
 include incl/footer.pug

@@ -143,11 +143,8 @@ router.get("/user/:id", (req, res) => {
             data2.sql = `SELECT balance, holderList FROM BankAccount WHERE holderList LIKE ` + `'%${req.params.id}%'` + `;`;
             database.queryPromise(data2.sql, data2.param)
                 .then((result2) => {
-                    if (result.length) {
-                        data.accounts = {
-                            balance: result2[0].balance,
-                            accountHolders: result2[0].holderList
-                        };
+                    if (result2.length) {
+                            data.accounts = result2;
                     }
                     res.render("user", data);
                 })
@@ -160,6 +157,7 @@ router.get("/user/:id", (req, res) => {
             throw err;
         });
 });
+
 
 router.get("/swish", (req, res) => {
     var data = {};

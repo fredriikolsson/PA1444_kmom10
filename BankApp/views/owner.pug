@@ -17,7 +17,22 @@ each row, rownum in resultset
         td= row.name
         td= row.nameId
 </table>
-<p><h4>Add holder to Account</h4></p>
+<p>
+<h4>Add holder to Account</h4>
+<form method="post" action="">
+    <input type="hidden" name="id" value="">
+    <p>
+    <input list="Users">
+    <datalist id="Users">
+      <option value="Håkan">
+      <option value="Peter">
+    </datalist>
+    <input type="submit" name="doEdit" value="Save">
+    
+    </p>
+</form>
+
+</p>
 
 include incl/footer.pug
 </div>

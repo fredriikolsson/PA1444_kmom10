@@ -9,6 +9,16 @@ const database = require("./database.js");
 const pid = require("./processID.js");
 const port = require("./port.js");
 const shutDown = require("./killServer.js");
+const fs = require("fs");
+
+const sql = fs.readFileSync("./sql/ib.sql", "utf8");
+
+var data = {};
+database.queryPromise(sql).then((result) => {
+    data.resultset = result;
+    result.render("database", data);
+});
+
 
 // Check if LINUX_PORT is found otherwise set port to 1337
 if (port.getPort() != -1) {

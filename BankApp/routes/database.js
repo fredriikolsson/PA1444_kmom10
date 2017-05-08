@@ -113,7 +113,7 @@ router.get("/createholder", (req, res) => {
 router.get("/user/:id", (req, res) => {
     var data = {};
     var data2 = {};
-    data.title = "SOME TITLE";
+    data.title = "user page";
 
     data.sql = `SELECT ssn, accountList, city, adress, name FROM AccountHolder WHERE id = ?;`;
 
@@ -131,8 +131,6 @@ router.get("/user/:id", (req, res) => {
 
                 };
             }
-                res.render("user", data);
-
             data2.sql = `SELECT balance, holderList FROM BankAccount WHERE holderList LIKE ` + `'%${req.params.id}%'` + `;`;
             database.queryPromise(data2.sql, data2.param)
                 .then((result2) => {

@@ -57,6 +57,7 @@ DROP PROCEDURE IF EXISTS loginCashier;
 DROP PROCEDURE IF EXISTS getName;
 DROP PROCEDURE IF EXISTS filLDB;
 DROP PROCEDURE IF EXISTS removeFromNFA;
+DROP PROCEDURE IF EXISTS swish;
 
 DROP TABLE IF EXISTS namesFromAccount;
 
@@ -341,8 +342,8 @@ BEGIN
         DECLARE currentId INT;
         DECLARE lastId INT;
         DECLARE aHolderList TEXT;
-
-
+		
+        
         SET counter = 1;
 		SET aHolderList = (SELECT holderList FROM BankAccount WHERE id = accountId);
         SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
@@ -361,6 +362,54 @@ BEGIN
 
 END
 //
+
+CREATE PROCEDURE swish(
+	userId INT,
+    userPin INT(4),
+    fromAccount INT,
+    inAccount INT,
+    amount INT
+)
+
+BEGIN
+-- DECLARE checkBalance INTEGER;
+-- DECLARE checkFromAccount INTEGER;
+-- DECLARE checkToAccount INTEGER;
+DECLARE spainMoney INTEGER;
+
+	START TRANSACTION;
+    -- SET checkToAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = fromAccount);
+	-- SET checkFromAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = toAccount);
+    -- SET checkBalance = (SELECT balance FROM BankAccount WHERE id = fromAccount);
+    SET spainMoney = amount * 0.02;
+
+    -- IF checkFromAccount != 0 AND checkToAccount != 0 THEN
+		-- IF checkBalance - amount < 0 THEN
+		-- ROLLBACK;
+-- 		SELECT "To small balance";
+-- 		ELSE
+
+		UPDATE BankAccount
+		SET balance = balance + amount - spainMoney
+		WHERE id = toAccount;
+
+		UPDATE BankAccount
+		SET balance = balance - amount
+		WHERE id = fromAccount;
+
+		UPDATE BankAccount
+		SET balance = balance + spainMoney
+		WHERE id = 1;
+
+		COMMIT;
+
+	-- END IF;
+	-- ELSE
+    -- ROLLBACK;
+    -- SELECT ("Account holder does not have access to one of the accounts");
+    -- END IF;
+END;
+// 
 DELIMITER ;
 
 
@@ -376,4 +425,4 @@ DELIMITER ;
 
 -- CALL login(1337, "1111");
 
-CALL fillDB();
+CALL getName(12);

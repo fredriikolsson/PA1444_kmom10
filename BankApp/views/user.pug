@@ -12,15 +12,22 @@ p <h4>Your Information</h4>
 
 <tr><th>Name</th><th>SSN</th><th>Adress</th><th>City</th><th>Accounts</th></tr>
 tr
-    
     td= object.name
     td= object.ssn
     td= object.adress
     td= object.city
     td= object.accountList
-    
 </table>
 
+p <h4>Your Accounts</h4>
+<table style= "width:80%">
+<tr><th>balance</th><th>account holders</th></tr>
+each row, rownum in accounts
+    tr
+        td= row.balance
+        td= row.holderList
+
+</table>
 
 <p><a href="/swish">Swish money</a></p>
 <p><a href="/swish">Create a new bank acount</a></p>

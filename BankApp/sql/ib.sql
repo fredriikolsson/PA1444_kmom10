@@ -437,4 +437,4 @@ DELIMITER ;
 
 -- CALL login(1337, "1111");
 
-CALL getName(12);
+CALL fillDB();

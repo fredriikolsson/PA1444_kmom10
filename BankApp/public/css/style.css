@@ -79,6 +79,7 @@
 {
     box-shadow: 1px 1px 4px 0px black;
     opacity: 0.3;
+    transform: rotate(0deg);
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
@@ -88,7 +89,8 @@
 
 #image:hover {
 opacity: 1.0;
-box-shadow: 1px 1px 420px 40px black;
+box-shadow: 1px 1px 420px 100px black;
+
 }
 
 

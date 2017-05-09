@@ -2,6 +2,8 @@
  * Style
  */
 
+* {margin: 0; padding: 0;}
+
  .body
  {
     width: 100%;
@@ -17,7 +19,11 @@
 
 }
 
-
+.banner {
+    position: relative;
+    left: 30%;
+    bottom: 65px;
+}
 
 
 .page

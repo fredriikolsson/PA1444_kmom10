@@ -1,0 +1,38 @@
+include incl/header.pug
+<div class="wrapper">
+<div class="page">
+<div class="article">
+if accounts
+p <h1 class="article-title"> Transfer money </h1>
+
+
+p <h4>Your Accounts</h4>
+<table style= "width:80%">
+<tr><th>id</th><th>Balance</th></tr>
+each row, rownum in accounts
+    tr
+        td= row.id
+        td= row.balance
+
+</table>
+<form class="form-style-4" method="post" action="/transferAUTH/#{owner.id}">
+    <label for="field1">
+    <input type="hidden" name="id" value="">
+    <span>From BankAccount:</span><input type="text" name="from" value="" required="true">
+    </label>
+    <label for="field2">
+    <span>To BankAccount:</span><input type="text" name="to" value="" required="true">
+    </label>
+    <label for="field3">
+    <span>Ammount:</span><input type="text" name="ammount" value="" required="true">
+    </label>
+    <label>
+    <span>&nbsp;</span><input type="submit" name="doEdit" value="transfer">
+    </label>
+</form>
+
+h1= message
+</div>
+include incl/footer.pug
+</div>
+</div>

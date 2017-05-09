@@ -59,6 +59,7 @@ DROP PROCEDURE IF EXISTS getTheNames;
 DROP PROCEDURE IF EXISTS filLDB;
 DROP PROCEDURE IF EXISTS removeFromNFA;
 DROP PROCEDURE IF EXISTS swish;
+DROP FUNCTION IF EXISTS getNames;
 
 DROP TABLE IF EXISTS namesFromAccount;
 
@@ -303,8 +304,7 @@ BEGIN
     ("Inga-Britta Gunnarson", 183205311010, "Kyrkogårdsvägen 1", "Dödsbo", 9999, "12,3"),
     ("Greta Garbo", 190509181990, "Jungfrugatan 5", "Stockholm", 1999, "7,13,14"),
     ("Helena Von Nattuggla", 195405043434, "Bingebongevägen 19","Kitkatskogen", 4337, "6,14"),
-    ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604, "11,13,14"),
-    ("Hakan", 1, "Hej", "Då", 1111, "5");
+    ("Balla Billy", 200001048982, "TuffaTågsrälsen 76", "CoolaKollektivet", 2604, "11,13,14");
 
     INSERT INTO BankAccount (balance, holderList)
     VALUES
@@ -339,13 +339,13 @@ CREATE PROCEDURE getTheNames(
     accountId INT
 )
 BEGIN
-
+		
         DECLARE counter INT;
         DECLARE currentId INT;
         DECLARE lastId INT;
         DECLARE aHolderList TEXT;
-
-
+		
+        
         SET counter = 1;
 		SET aHolderList = (SELECT holderList FROM BankAccount WHERE id = accountId);
         SET currentId = substring_index(substring_index(aHolderList, ',', counter), ',', -1);
@@ -366,10 +366,10 @@ END
 //
 
 CREATE PROCEDURE swish(
-	userId INT,
+	userId BIGINT,
     userPin INT(4),
     fromAccount INT,
-    inAccount INT,
+    toAccount INT,
     amount INT
 )
 
@@ -378,19 +378,35 @@ BEGIN
 -- DECLARE checkFromAccount INTEGER;
 -- DECLARE checkToAccount INTEGER;
 DECLARE spainMoney INTEGER;
+DECLARE doesExists BOOLEAN;
 
 	START TRANSACTION;
     -- SET checkToAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = fromAccount);
 	-- SET checkFromAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = toAccount);
     -- SET checkBalance = (SELECT balance FROM BankAccount WHERE id = fromAccount);
+    SET doesExists = FALSE;
     SET spainMoney = amount * 0.02;
-
-    -- IF checkFromAccount != 0 AND checkToAccount != 0 THEN
-		-- IF checkBalance - amount < 0 THEN
-		-- ROLLBACK;
--- 		SELECT "To small balance";
--- 		ELSE
-
+    SET @aHolderList = (SELECT accountList FROM AccountHolder WHERE id = userId);
+	SET @counter = 1;
+    SET @accountExists = substring_index(substring_index(@aHolderList, ',', @counter), ',', -1);
+    SET @lastId = 99999;
+    
+    SELECT * FROM AccountHolder WHERE id = userId;
+    
+    
+    
+		WHILE @lastId != @accountExists AND doesExists = FALSE DO
+			IF @accountExists = fromAccount THEN
+            SET doesExists = TRUE;
+            ELSE
+			SET @lastId = @accountExists;
+			SET @counter = @counter + 1;
+            SELECT @accountExists, @lastId;
+			SET @accountExists = (SELECT substring_index(substring_index(@aHolderList, ',', @counter), ',', -1));
+            END IF;
+		END WHILE;
+        
+        IF doesExists = true THEN        
 		UPDATE BankAccount
 		SET balance = balance + amount - spainMoney
 		WHERE id = toAccount;
@@ -402,8 +418,13 @@ DECLARE spainMoney INTEGER;
 		UPDATE BankAccount
 		SET balance = balance + spainMoney
 		WHERE id = 1;
-
+        
 		COMMIT;
+        
+        ELSE
+			ROLLBACK;
+			SELECT ("Account holder does not have access to the account trying to SWISH from");
+		END IF;
 
 	-- END IF;
 	-- ELSE
@@ -411,17 +432,29 @@ DECLARE spainMoney INTEGER;
     -- SELECT ("Account holder does not have access to one of the accounts");
     -- END IF;
 END;
-//
+// 
 
 CREATE PROCEDURE getName(
 	nameId INT
-)
+) 
 BEGIN
 
 CALL removeFromNFA();
 CALL getTheNames(nameId);
 
-END //
+END // 
+
+-- CREATE Function getNames(
+-- 	nameId INT
+-- ) 
+-- RETURNS VARCHAR(20)
+-- BEGIN
+-- 
+-- CALL removeFromNFA();
+-- CALL getTheNames(nameId);
+-- RETURN (SELECT name FROM namesFromAccount WHERE id = 1);
+-- 
+-- END // 
 
 DELIMITER ;
 
@@ -439,3 +472,13 @@ DELIMITER ;
 -- CALL login(1337, "1111");
 
 CALL fillDB();
+
+SELECT * FROM AccountHolder;
+
+CALL getName(11);
+
+SELECT * FROM BankAccount;
+
+CALL swish(2, 1337, 2, 14, 5);
+
+SELECT * FROM BankAccount;

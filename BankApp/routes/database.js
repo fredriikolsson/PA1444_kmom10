@@ -115,7 +115,7 @@ router.get("/user/:id", (req, res) => {
     var data2 = {};
     data.title = "user page";
 
-    data.sql = `SELECT ssn, accountList, city, adress, name FROM AccountHolder WHERE id = ?;`;
+    data.sql = `SELECT ssn,(SELECT name FROM AccountHolder) AccountList, city, adress, name FROM AccountHolder WHERE id = ?;`;
 
     data.param = [req.params.id];
 
@@ -179,13 +179,13 @@ router.get("/swish", (req, res) => {
 
 router.post("/swishing", (req, res) => {
     var data = {};
-    data.sql = `CALL swish(?, ?, ?, ?, ?)`;
-    data.param = [req.body.id, req.body.pin, req.body.from, req.body.to, req.body.ammount];
+    data.sql = `CALL swish(?, ?, ?, ?, ?);`;
+    data.param = [req.body.id, req.body.pin, req.body.from, req.body.to, req.body.amount];
     database.queryPromise(data.sql, data.param)
         .then(() => {
-        data.title = "Ammount: " + req.body.ammount + " sent to user " + req.body.to;
-        res.redirect(`/swish`, data);
-        })
+        res.redirect(`/swish`);
+        console.log("Passed redirect");
+    })
         .catch((err) => {
             throw err;
         });

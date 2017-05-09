@@ -128,13 +128,11 @@ tr:nth-child(even) {
 
 .form-style-4{
     font-size: 16px;
-    background: #DBE1DD;
-    padding: 10px 5px 5px 10px;
+
+    padding: 10px 5px 5px 20px;
     position: relative;
     width: 92%;
-    -webkit-box-shadow:-1px 1px 4px #5a5a5a ;
-    -moz-box-shadow:-1px 1px 4px  #5a5a5a ;
-    box-shadow:-1px 1px 4px  #5a5a5a ;
+
 }
 .form-style-4 input[type=submit],
 .form-style-4 input[type=button],

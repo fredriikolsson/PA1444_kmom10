@@ -177,6 +177,20 @@ router.get("/swish", (req, res) => {
         });
 });
 
+router.post("/swishing", (req, res) => {
+    var data = {};
+    data.sql = `CALL swish(?, ?, ?, ?, ?)`;
+    data.param = [req.body.id, req.body.pin, req.body.from, req.body.to, req.body.ammount];
+    database.queryPromise(data.sql, data.param)
+        .then(() => {
+        data.title = "Ammount: " + req.body.ammount + " sent to user " + req.body.to;
+        res.redirect(`/swish`, data);
+        })
+        .catch((err) => {
+            throw err;
+        });
+});
+
 router.post("/owners", (req, res) => {
     var data = {};
 

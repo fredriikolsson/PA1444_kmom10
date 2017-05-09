@@ -113,9 +113,9 @@ router.get("/createholder", (req, res) => {
 router.get("/user/:id", (req, res) => {
     var data = {};
     var data2 = {};
-    data.title = "user page";
+    data.title = "SOME TITLE";
 
-    data.sql = `SELECT ssn,(SELECT name FROM AccountHolder) AccountList, city, adress, name FROM AccountHolder WHERE id = ?;`;
+    data.sql = `SELECT id, ssn, accountList, city, adress, name FROM AccountHolder WHERE id = ?;`;
 
     data.param = [req.params.id];
 
@@ -123,6 +123,7 @@ router.get("/user/:id", (req, res) => {
         .then((result) => {
             if (result.length) {
                 data.object = {
+                    id: result[0].id,
                     ssn: result[0].ssn,
                     accountList: result[0].accountList,
                     city: result[0].city,
@@ -131,12 +132,13 @@ router.get("/user/:id", (req, res) => {
 
                 };
             }
-            data2.sql = `SELECT balance, holderList FROM BankAccount WHERE holderList LIKE ` + `'%${req.params.id}%'` + `;`;
+            data2.sql = `SELECT id, balance, holderList FROM BankAccount WHERE holderList LIKE ` + `'%${req.params.id}%'` + `;`;
             database.queryPromise(data2.sql, data2.param)
                 .then((result2) => {
                     if (result2.length) {
                             data.accounts = result2;
                     }
+
                     res.render("user", data);
                 })
                 .catch((err) => {
@@ -148,6 +150,7 @@ router.get("/user/:id", (req, res) => {
             throw err;
         });
 });
+
 
 
 router.get("/swish", (req, res) => {

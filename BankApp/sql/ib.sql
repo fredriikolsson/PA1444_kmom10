@@ -92,12 +92,52 @@ DECLARE checkFromAccount INTEGER;
 DECLARE checkToAccount INTEGER;
 DECLARE spainMoney INTEGER;
 
+DECLARE doesExists1 BOOLEAN;
+DECLARE doesExists2 BOOLEAN;
+
+
+	   
+
 	START TRANSACTION;
     -- SET checkToAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = fromAccount);
 	-- SET checkFromAccount = (SELECT FIND_IN_SET(moverId, BankAccount.accountList) FROM BankAccount WHERE id = toAccount);
     SET checkBalance = (SELECT balance FROM BankAccount WHERE id = fromAccount);
     SET spainMoney = amount * 0.03;
+    SET doesExists1 = FALSE;
+    SET doesExists2 = FALSE;
+    SET @aHolderList = (SELECT accountList FROM AccountHolder WHERE id = moverId);
+	SET @counter = 1;
+    SET @accountExists = substring_index(substring_index(@aHolderList, ',', @counter), ',', -1);
+    SET @lastId = 99999;
 
+		WHILE @lastId != @accountExists AND doesExists1 = FALSE DO
+			IF @accountExists = fromAccount THEN
+            SET doesExists1 = TRUE;
+            ELSE
+			SET @lastId = @accountExists;
+			SET @counter = @counter + 1;
+			SET @accountExists = (SELECT substring_index(substring_index(@aHolderList, ',', @counter), ',', -1));
+            END IF;
+		END WHILE;
+        
+       	SET @counter = 1;
+		SET @accountExists = substring_index(substring_index(@aHolderList, ',', @counter), ',', -1);
+		SET @lastId = 99999;
+ 
+        
+		WHILE @lastId != @accountExists AND doesExists2 = FALSE DO
+			IF @accountExists = toAccount THEN
+            SET doesExists2 = TRUE;
+            ELSE
+			SET @lastId = @accountExists;
+			SET @counter = @counter + 1;
+			SET @accountExists = (SELECT substring_index(substring_index(@aHolderList, ',', @counter), ',', -1));
+            END IF;
+		END WHILE;
+        
+        IF doesExists1 = true AND doesExists2 = true THEN     
+
+	
     -- IF checkFromAccount != 0 AND checkToAccount != 0 THEN
 		IF checkBalance - amount < 0 THEN
 		ROLLBACK;
@@ -119,10 +159,10 @@ DECLARE spainMoney INTEGER;
 		COMMIT;
 
 		END IF;
-	-- ELSE
-    -- ROLLBACK;
-    -- SELECT ("Account holder does not have access to one of the accounts");
-    -- END IF;
+	 ELSE
+     ROLLBACK;
+     SELECT ("Account holder does not have access to one of the accounts");
+     END IF;
 
 END //
 
@@ -473,13 +513,3 @@ DELIMITER ;
 -- CALL login(1337, "1111");
 
 CALL fillDB();
-
-SELECT * FROM AccountHolder;
-
-CALL getName(11);
-
-SELECT * FROM BankAccount;
-
-CALL swish(2, 1867, 14, 14, 5);
-
-SELECT * FROM BankAccount;

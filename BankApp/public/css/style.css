@@ -156,6 +156,7 @@ tr:nth-child(even) {
 .form-style-4 input[type=submit],
 .form-style-4 input[type=button],
 .form-style-4 input[type=text],
+.form-style-4 input[type=password],
 .form-style-4 input[type=email],
 .form-style-4 textarea,
 .form-style-4 label
@@ -175,6 +176,7 @@ tr:nth-child(even) {
     width: 150px;
 }
 .form-style-4 input[type=text],
+.form-style-4 input[type=password],
 .form-style-4 input[type=email]
 {
     background: transparent;
@@ -200,6 +202,7 @@ tr:nth-child(even) {
 
 .form-style-4 textarea:focus,
 .form-style-4 input[type=text]:focus,
+.form-style-4 input[type=password]:focus,
 .form-style-4 input[type=email]:focus,
 .form-style-4 input[type=email] :focus
 {

@@ -391,17 +391,15 @@ DECLARE doesExists BOOLEAN;
     SET @accountExists = substring_index(substring_index(@aHolderList, ',', @counter), ',', -1);
     SET @lastId = 99999;
     
-    SELECT * FROM AccountHolder WHERE id = userId;
+    SET @correctPin = (SELECT pin FROM AccountHolder WHERE id = userId);
     
-    
-    
+    IF userPin = @correctPin THEN 
 		WHILE @lastId != @accountExists AND doesExists = FALSE DO
 			IF @accountExists = fromAccount THEN
             SET doesExists = TRUE;
             ELSE
 			SET @lastId = @accountExists;
 			SET @counter = @counter + 1;
-            SELECT @accountExists, @lastId;
 			SET @accountExists = (SELECT substring_index(substring_index(@aHolderList, ',', @counter), ',', -1));
             END IF;
 		END WHILE;
@@ -425,7 +423,10 @@ DECLARE doesExists BOOLEAN;
 			ROLLBACK;
 			SELECT ("Account holder does not have access to the account trying to SWISH from");
 		END IF;
-
+	ELSE 
+		ROLLBACK;
+        SELECT ("Wrong pin");
+	END IF;
 	-- END IF;
 	-- ELSE
     -- ROLLBACK;
@@ -479,6 +480,6 @@ CALL getName(11);
 
 SELECT * FROM BankAccount;
 
-CALL swish(2, 1337, 2, 14, 5);
+CALL swish(2, 1867, 14, 14, 5);
 
 SELECT * FROM BankAccount;

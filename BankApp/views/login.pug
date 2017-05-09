@@ -4,12 +4,17 @@ include incl/header.pug
 <div class="article">
 h1= message
 <h1 class = "article-title"> Login Page </h1>
-<form method="post" action="/loginAUTH">
+<form class="form-style-4" method="post" action="/loginAUTH">
     <input type="hidden" name="id" value="">
-    <p>SSN:<input type="text" name="ssn" value=""></p>
-    <p>PIN:<input type="password" name="pin" value=""></p>
-    <input type="submit" name="doEdit" value="Save">
-    <input type="reset" value="Reset">
+    <label for="field1">
+    <span>SSN:</span><input type="text" name="ssn" value="" required="true">
+    </label>
+    <label for="field2">
+    <span>PIN:</span><input type="password" name="pin" value="" required="true">
+    </label>
+    <label>
+    <span>&nbsp;</span><input type="submit" name="doEdit" value="Login">
+    </label>
 </form>
 </div>
 include incl/footer.pug

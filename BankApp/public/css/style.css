@@ -148,7 +148,7 @@ tr:nth-child(even) {
     font-size: 16px;
     background: #DBE1DD;
     padding: 30px 30px 15px 30px;
-    border: 1px solid #000000;
+
     -webkit-box-shadow:-1px 1px 4px #5a5a5a ;
     -moz-box-shadow:-1px 1px 4px  #5a5a5a ;
     box-shadow:-1px 1px 4px  #5a5a5a ;
@@ -156,8 +156,8 @@ tr:nth-child(even) {
 .form-style-4 input[type=submit],
 .form-style-4 input[type=button],
 .form-style-4 input[type=text],
-.form-style-4 input[type=password],
 .form-style-4 input[type=email],
+.form-style-4 input[type=password],
 .form-style-4 textarea,
 .form-style-4 label
 {
@@ -175,8 +175,8 @@ tr:nth-child(even) {
     float: left;
     width: 150px;
 }
-.form-style-4 input[type=text],
 .form-style-4 input[type=password],
+.form-style-4 input[type=text],
 .form-style-4 input[type=email]
 {
     background: transparent;
@@ -201,8 +201,8 @@ tr:nth-child(even) {
 }
 
 .form-style-4 textarea:focus,
-.form-style-4 input[type=text]:focus,
 .form-style-4 input[type=password]:focus,
+.form-style-4 input[type=text]:focus,
 .form-style-4 input[type=email]:focus,
 .form-style-4 input[type=email] :focus
 {

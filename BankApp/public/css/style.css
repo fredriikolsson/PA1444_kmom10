@@ -81,32 +81,6 @@
     background-color: lightgrey;
 }
 
-.flatButton
-{
-  height: 50px;
-  width: 200px;
-  margin: 2px 5px;
-  padding: 2px 16px;
-  font-size: 30px;
-  background-color: white;
-  color: black;
-  border: 2px solid #555555;
-  transition-duration: 0.4s;
-  float: left;
-  border-radius: 5px;
-
-
-}
-
-
-
-.flatButton:hover
-{
-  background-color: #555555;
-  color: white;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-
-}
 
 .video
 {
@@ -169,8 +143,78 @@ tr:nth-child(even) {
   background-image: url('https://wallpaperscraft.com/image/light_faded_background_85547_2560x1440.jpg');
   z-index: -1;
 }
-/*
-    BLUR
-    color: transparent;
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
-*/
+
+.form-style-4{
+    font-size: 16px;
+    background: #DBE1DD;
+    padding: 30px 30px 15px 30px;
+    border: 1px solid #000000;
+    -webkit-box-shadow:-1px 1px 4px #5a5a5a ;
+    -moz-box-shadow:-1px 1px 4px  #5a5a5a ;
+    box-shadow:-1px 1px 4px  #5a5a5a ;
+}
+.form-style-4 input[type=submit],
+.form-style-4 input[type=button],
+.form-style-4 input[type=text],
+.form-style-4 input[type=email],
+.form-style-4 textarea,
+.form-style-4 label
+{
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 16px;
+    color: #000000;
+
+}
+.form-style-4 label {
+    display:block;
+    margin-bottom: 10px;
+}
+.form-style-4 label > span{
+    display: inline-block;
+    float: left;
+    width: 150px;
+}
+.form-style-4 input[type=text],
+.form-style-4 input[type=email]
+{
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #83A4C5;
+    width: 275px;
+    outline: none;
+    padding: 0px 0px 0px 0px;
+    font-style: italic;
+}
+.form-style-4 textarea{
+    font-style: italic;
+    padding: 0px 0px 0px 0px;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px dashed #83A4C5;
+    width: 275px;
+    overflow: hidden;
+    resize:none;
+    height:20px;
+}
+
+.form-style-4 textarea:focus,
+.form-style-4 input[type=text]:focus,
+.form-style-4 input[type=email]:focus,
+.form-style-4 input[type=email] :focus
+{
+    border-bottom: 1px dashed #D9FFA9;
+}
+
+.form-style-4 input[type=submit],
+.form-style-4 input[type=button]{
+    background: #576E86;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #A8BACE;
+}
+.form-style-4 input[type=submit]:hover,
+.form-style-4 input[type=button]:hover{
+background: #394D61;
+}

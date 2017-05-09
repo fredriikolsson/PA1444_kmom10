@@ -139,6 +139,8 @@ tr:nth-child(even) {
       background: -moz-background: linear-gradient(141deg, #7CBBFF 10%, #68d6d2 70%);
    /* For Firefox 3.6 to 15 */
      background: linear-gradient(141deg, #7CBBFF 10%, #68d6d2 70%);
+     background: linear-gradient(141deg, #2679ff 10%, darkblue 70%);
+
 
   z-index: -1;
 }

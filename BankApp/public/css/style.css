@@ -17,31 +17,13 @@
 
 }
 
-.menu
-{
-  width: 10%;
-  height: 400px;
-  position: fixed;
-  margin-top: 80px;
-  margin-right: 50px;
-
-}
-
-.item
-{
-  width: 80%;
-  margin: 0 auto;
-  height: 50px;
-  margin-top: 2px;
-}
 
 
 
 .page
 {
-  width: 70%;
+  width: 100%;
   top: 0;
-  right: 20px;
   position: absolute;
   padding-left: 20px;
   margin-left: 20px;
@@ -147,8 +129,9 @@ tr:nth-child(even) {
 .form-style-4{
     font-size: 16px;
     background: #DBE1DD;
-    padding: 30px 30px 15px 30px;
-
+    padding: 10px 5px 5px 10px;
+    position: relative;
+    width: 92%;
     -webkit-box-shadow:-1px 1px 4px #5a5a5a ;
     -moz-box-shadow:-1px 1px 4px  #5a5a5a ;
     box-shadow:-1px 1px 4px  #5a5a5a ;

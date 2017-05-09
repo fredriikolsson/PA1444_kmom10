@@ -10,6 +10,17 @@ https://dbwebb.se/kurser/dbjs/projekt-internetbanken
 
 Deadline: 2017-05-04
 
+# Remaining tasks:
+    Swish
+    Loggfil
+    ER-modellering
+    Cashier-sidan
+    Dokumentera allt
+    AccountHolder ska kunna göra eget konto
+    AccountHolder ska kunna föra över pengar mellan sina konton
+    Cashier kan ändra och skapa nya och lägga till fler ägare
+    Interest à day
+
 
 
 Task list

@@ -302,11 +302,13 @@ router.get("/swish", (req, res) => {
 router.post("/swishing", (req, res) => {
     var data = {};
     data.sql = `CALL swish(?, ?, ?, ?, ?);`;
-    data.param = [req.body.id, req.body.pin, req.body.from, req.body.to, req.body.amount];
+    data.param = [req.body.fromId, req.body.pin, req.body.from, req.body.to, req.body.amount];
+    console.log(data.param);
     database.queryPromise(data.sql, data.param)
-        .then(() => {
+        .then((result) => {
+        console.log("Starting swish");
         res.redirect(`/swish`);
-        console.log("Passed redirect");
+        console.log(result);
     })
         .catch((err) => {
             throw err;

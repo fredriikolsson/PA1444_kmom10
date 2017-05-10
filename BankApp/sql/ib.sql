@@ -523,7 +523,7 @@ DELIMITER ;
 -- CALL login(1337, "1111");
 
 CALL fillDB();
-SELECT * FROM InterestTable;
 CALL CalculateInterest(2);
-SELECT * FROM InterestTable;
 CALL createAccountHolder(1111, "HejPåDig", 1997, "Där" , "Här");
+INSERT INTO Cashier(id, pin) VALUES(1, 1111);
+INSERT INTO Cashier(id, pin) VALUES(2, 2222);

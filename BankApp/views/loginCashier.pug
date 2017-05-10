@@ -1,0 +1,21 @@
+include incl/header.pug
+<div class="wrapper">
+<div class="page">
+<div class="article">
+h1= message
+<h1 class = "article-title"> Login Page </h1>
+<form class="form-style-4" method="post" action="/loginAUTHCashier">
+    <label for="field1">
+    <span>ID:</span><input type="text" name="id" value="" required="true">
+    </label>
+    <label for="field2">
+    <span>PIN:</span><input type="password" name="pin" value="" required="true">''
+    </label>
+    <label>
+    <span>&nbsp;</span><input type="submit" name="doEdit" value="Login">
+    </label>
+</form>
+</div>
+include incl/footer.pug
+</div>
+</div>

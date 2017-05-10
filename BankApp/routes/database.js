@@ -390,7 +390,7 @@ router.get("/owners/:id", (req, res) => {
             throw err;
         });
 });
- 
+
 router.post("/transferAUTH/", (req, res) => {
     var data = {};
     data.sql = `CALL moveMoney(?, ?, ?, ?)`;

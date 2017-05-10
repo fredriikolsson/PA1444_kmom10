@@ -80,6 +80,16 @@ router.get("/createaccount/:id", (req, res) => {
         });
 });
 
+router.post("/redirectUser", (req, res) => {
+    var data = {};
+    data.sql = `SELECT * FROM AccountHolder
+    WHERE id = ?`;
+
+    data.param = [req.body.accountId];
+
+    res.redirect(`/user/${data.param}`);
+});
+
 router.get("/cashierCreateaccount", (req, res) => {
     var data = {};
 

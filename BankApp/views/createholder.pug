@@ -1,33 +1,21 @@
-include incl/header.pug
 <div class="wrapper">
 <div class="page">
-<div class="article">
+include incl/header.pug
+h1.article-title
 h1= message
-<<<<<<< HEAD
 p.article-text
 <h2>Create a new Account Holder</h2>
-<form method="post" action="/home">
-<input type="hidden" name="id" value="">
-<p>Name:<input type="text" name="name" value=""> *</p>
-<p>Date Of Birth<input type="text" name="name" value=""> *</p>
-<p>User-id:<input type="text" name="name" value=""> *</p>
-<p>Adress:<input type="text" name="name" value=""> *</p>
-<p>City:<input type="password" name="name" value=""> *</p>   
-<p>PIN(4-digits):<input type="password" name="name" value=""> *</p>    
-<input type="submit" name="doEdit" value="Save">
-<input type="reset" value="Reset">
-=======
-
-p <h4>Create a new Account</h4>
-<form class="form-style-4" method="post" action="/home">
-    <input type="hidden" name="id" value="">
-    <label for="field1">
-    <p>Account Name:<input type="text" name="name" value="">
-    <label for="field2">
-    <input type="submit" name="doEdit" value="Create Account">
->>>>>>> 24c06f7a100ac58d533b94fc03b4530948684756
+<form method="post" action="/create">
+<p>Name <input type="text" name="newName"> *</p>
+<p>SSN<input type="number" name="newSsn"> *</p>
+<p>Adress:<input type="text" name="newAdress"> *</p>
+<p>City:<input type="text" name="newCity"> *</p>  
+<p>PIN(4-digits):<input type="password" name="newPin"> *</p>     
+<input type="submit" name="doEdit" value="Create">
 </form>
-</div>
+
+p
+    
 include incl/footer.pug
 </div>
 </div>

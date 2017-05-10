@@ -7,9 +7,9 @@ h1= message
 p <h4>Create a new Account</h4>
 p
 <form method="post" action="/redirectUser">
-    <input type="hidden" name="id" value="">
-    <h6>Creating new empty account </h6> 
-    <input type="submit" name="doEdit" value="Create">
+p <h5>Account Will be added to your list of personal Accounts.
+    <input type="hidden" name="accountId" value=#{param}>
+    <input type="submit" name="doEdit" value="Create"></h5>
 </form>
 </div>
 include incl/footer.pug

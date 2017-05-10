@@ -44,6 +44,30 @@ router.post("/loginAUTH", (req, res) => {
         });
 });
 
+router.get("/loginCashier", (req, res) => {
+    res.render(`loginCashier`, {
+        title: "LoginCashier",
+
+    });
+});
+
+router.post("/loginAUTHCashier", (req, res) => {
+    var data = {};
+    data.sql = `CALL loginCashier(?, ?);`;
+    data.param = [req.body.id, req.body.pin];
+    database.queryPromise(data.sql, data.param)
+        .then((result) => {
+        let theResult = result.shift();
+        data.object = {
+            "id": theResult[0].id
+        };
+        res.redirect(`/cashier`);
+    })
+        .catch((err) => {
+            throw err;
+        });
+});
+
 router.post("/createAccount", (req, res) => {
     var data = {};
 

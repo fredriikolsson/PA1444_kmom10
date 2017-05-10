@@ -8,7 +8,6 @@ h1= message
 p.article-text
 p  <h2>Manage owners for Account </h2>
 p <h4> Current owners </h4>
-
 <table>
 <tr><th>Owner number</th><th>Owner Name</th><th>Owner id's</th></tr>
 each row, rownum in resultset
@@ -19,14 +18,11 @@ each row, rownum in resultset
 </table>
 <p>
 <h4>Add holder to Account</h4>
-<form method="post" action="">
-    <input type="hidden" name="id" value="">
+<form method="post" action="/updateAccount">
+- console.log(param);
+    <input type="hidden" name="id" value="#{param}">
     <p>
-    <input list="Users">
-    <datalist id="Users">
-      <option value="Håkan">
-      <option value="Peter">
-    </datalist>
+    <input type="number" name="newAccount">
     <input type="submit" name="doEdit" value="Save">
     
     </p>

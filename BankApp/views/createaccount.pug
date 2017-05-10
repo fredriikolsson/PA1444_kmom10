@@ -5,11 +5,11 @@ include incl/header.pug
 h1= message
 
 p <h4>Create a new Account</h4>
-<form method="post" action="/home">
+p
+<form method="post" action="/cashier">
     <input type="hidden" name="id" value="">
-    <p>Account Name:<input type="text" name="name" value=""> *</p>
-    <input type="submit" name="doEdit" value="Save">
-    <input type="reset" value="Reset">
+    <h6>Creating new empty account </h6> 
+    <input type="submit" name="doEdit" value="Create">
 </form>
 </div>
 include incl/footer.pug

@@ -1,11 +1,12 @@
 <div class="wrapper">
 <div class="page">
+
 include incl/header.pug
 h1.article-title
 h1= message
 p.article-text
 p  <h2>Cashier Management Page</h2>
-p 
+
 <p>Create a new Holder - <a href="/createholder/">Here.</a></p>
 <p>Create a new Account - <a href="/createaccount/">Here.</a></p>
 
@@ -20,6 +21,7 @@ each row, rownum in resultset
         
         <td><a href="/owners/#{row.id}"</a>Edit</td>
 </table>
+
 
 
 include incl/footer.pug

@@ -12,13 +12,17 @@ p <h4>Your Information</h4>
 
 <tr><th>Name</th><th>SSN</th><th>Adress</th><th>City</th><th>Accounts</th></tr>
 tr
+    
     td= object.name
     td= object.ssn
     td= object.adress
     td= object.city
     td= object.accountList
+    
 </table>
 
+<<<<<<< HEAD
+=======
 p <h4>Your Accounts</h4>
 <table style= "width:80%">
 <tr><th>id</th><th>Balance</th><th>Edit Account</th></tr>
@@ -34,6 +38,7 @@ each row, rownum in accounts
 p.article-text <b>Transfer Money:</b> <a href="/transfer/#{object.id}"> Transfer money </a>
 p.article-text <b>Create new Bank Account</b> <a href="/createaccount"> Create Bank Account </a>
 
+>>>>>>> 24c06f7a100ac58d533b94fc03b4530948684756
 
 
 

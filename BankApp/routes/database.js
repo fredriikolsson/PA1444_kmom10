@@ -1,6 +1,10 @@
 "use strict";
- // Hej 
+ // Hej
 // på dig
+
+ // Hej
+
+ //med mig
 const express = require("express");
 const router = express.Router();
 const database = require("../database");
@@ -40,14 +44,128 @@ router.post("/loginAUTH", (req, res) => {
         });
 });
 
-router.get("/createaccount", (req, res) => {
-    res.render("createaccount", {
-        title: "login route | express",
-        message: ""
-    });
+router.post("/createAccount", (req, res) => {
+    var data = {};
+
+    data.sql = `SELECT * FROM AccountHolder
+    WHERE id = ?;`;
+
+    data.param = [req.body.newAccount, req.body.id];
+
+    database.queryPromise(data.sql, data.param)
+        .then(() => {
+            res.redirect(`/user/${req.body.id}`);
+        })
+        .catch((err) => {
+            throw err;
+        });
+});
+
+router.get("/createaccount/:id", (req, res) => {
+    var data = {};
+
+    data.title = "SOME TITLE";
+    data.sql = `CALL createBankAccount(0,?);`;
+    data.param = [req.params.id];
+
+    database.queryPromise(data.sql, data.param)
+        .then((result) => {
+            let theResult = result.shift();
+            data.resultset = theResult;
+            console.log(data);
+            res.render("createaccount", data);
+        })
+        .catch((err) => {
+            throw err;
+        });
+});
+
+router.get("/cashierCreateaccount", (req, res) => {
+    var data = {};
+
+    data.title = "SOME TITLE";
+
+    data.sql = `CALL createBankAccount(0,"");`;
+
+    database.queryPromise(data.sql)
+        .then((result) => {
+            data.resultset = result;
+            res.render("cashierCreateaccount", data);
+        })
+        .catch((err) => {
+            throw err;
+        });
 });
 
 
+router.post("/create", (req, res) => {
+    var data = {};
+
+    data.title = "SOME TITLE";
+
+    data.sql = `CALL createAccountHolder(?,?,?,?,?);`;
+
+    data.param = [req.body.newPin, req.body.newName,
+    req.body.newSsn, req.body.newAdress, req.body.newCity];
+    database.queryPromise(data.sql, data.param)
+        .then(() => {
+            res.redirect(`/createholder`);
+        })
+        .catch((err) => {
+            throw err;
+        });
+});
+
+router.get("/createholder", (req, res) => {
+    var data = {};
+    data.sql = `SELECT * FROM AccountHolder;`;
+
+    database.queryPromise(data.sql)
+        .then(() => {
+            res.render("createholder", data);
+        })
+        .catch((err) => {
+            throw err;
+        });
+});
+
+router.post("/updateAccount", (req, res) => {
+    var data = {};
+
+    data.sql = `
+    UPDATE BankAccount
+    SET
+    holderList = CONCAT(holderList, ',',?)
+    WHERE id = ?;`;
+
+    console.log(req.body);
+    data.param = [req.body.newAccount, req.body.id];
+
+    database.queryPromise(data.sql, data.param)
+        .then(() => {
+            res.redirect(`/owners/${req.body.id}`);
+        })
+        .catch((err) => {
+            throw err;
+        });
+});
+
+router.get("/owners/:id", (req, res) => {
+    var data = {};
+    data.sql = `CALL getName(?);`;
+    data.param = [req.params.id];
+
+    database.queryPromise(data.sql, data.param)
+        .then((result) => {
+            let theResult = result.shift();
+            data.resultset = theResult;
+            console.log(data);
+            res.render("owner", data);
+        })
+        .catch((err) => {
+            throw err;
+        });
+});
 
 router.get("/log", (req, res) => {
     var data = {};

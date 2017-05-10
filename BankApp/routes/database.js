@@ -123,7 +123,7 @@ router.get("/cashierCreateAccount", (req, res) => {
 
 router.post("/redirectCashier", (req, res) => {
     var data = {};
-    data.sql = `CALL createBankAccount(0,"");`;
+    data.sql = `INSERT INTO BankAccount (balance, holderList) VALUES(0, "");`;
 
     database.queryPromise(data.sql, data.param)
         .then(() => {
@@ -192,17 +192,24 @@ router.get("/owners/:id", (req, res) => {
     var data = {};
     data.sql = `CALL getName(?);`;
     data.param = [req.params.id];
-
-    database.queryPromise(data.sql, data.param)
-        .then((result) => {
-            let theResult = result.shift();
-            data.resultset = theResult;
+    database.queryPromise(data.sql, data.param).then((result) => {
+        let theResult = result.shift();
+        data.resultset = theResult;
+        console.log(data);
+        console.log("snart");
+        data.sql = `SELECT * FROM InterestTable WHERE accountNumber = ?`;
+        database.queryPromise(data.sql, data.param).then((result2) => {
+            data.interest = result2;
+            console.log("här");
+            console.log(data.interest);
             console.log(data);
             res.render("owner", data);
-        })
-        .catch((err) => {
+        }).catch((err) => {
             throw err;
         });
+    }).catch((err) => {
+        throw err;
+    });
 });
 
 router.get("/log", (req, res) => {
@@ -423,6 +430,16 @@ router.get("/transfer/:id", (req, res) => {
         .catch((err) => {
             throw err;
         });
+});
+
+router.post("/calculateInterest", (req, res) => {
+    var data = {};
+    data.sql = `CALL calculateInterest(0.3);`;
+    database.queryPromise(data.sql).then(() => {
+        res.redirect(`/cashier`);
+    }).catch((err) => {
+        throw err;
+    });
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
+include incl/header.pug
 <div class="wrapper">
 <div class="page">
-include incl/header.pug
 
 if object
 h1.article-title
@@ -26,8 +26,21 @@ each row, rownum in resultset
     <input type="submit" name="doEdit" value="Save">
     </p>
 </form>
-
 </p>
+
+- console.log("hej")
+- console.log(interest)
+- console.log(resultset)
+<table>
+<tr><th>Account number</th><th>Value</th><th>Date</th></tr>
+each row, rownum in interest
+    tr
+         td= row.accountNumber        
+         td= row.value        
+         td= row.dateFor
+</table>
+
+
 
 include incl/footer.pug
 </div>

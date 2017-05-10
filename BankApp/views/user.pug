@@ -21,7 +21,7 @@ tr
     
 </table>
 
-
+if accounts
 p <h4>Your Accounts</h4>
 <table style= "width:80%">
 <tr><th>id</th><th>Balance</th><th>Edit Account</th></tr>
@@ -35,6 +35,7 @@ each row, rownum in accounts
 
 </table>
 p.article-text <b>Transfer Money:</b> <a href="/transfer/#{object.id}"> Transfer money </a>
+<p><br></p>
 p.article-text <b>Create new Bank Account</b> <a href="/createaccount"> Create Bank Account </a>
 
 

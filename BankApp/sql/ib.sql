@@ -174,11 +174,12 @@ CREATE PROCEDURE createAccountHolder (
     newCity VARCHAR(50)
 )
 BEGIN
-
-	IF (SELECT id FROM AccountHolder WHERE ssn = newSsn) = NULL THEN
-	INSERT INTO AccountHolder (name, ssn, adress, city, pin) VALUES(newName, newSsn, newAdres, newCity, newPin);
-	ELSE
+	SET @doesExists = (SELECT id FROM AccountHolder WHERE ssn = newSsn);
+    SELECT @doesExists;
+	IF @doesExists != NULL THEN
 	SELECT ("Account holder already exists");
+	ELSE
+    INSERT INTO AccountHolder (name, ssn, adress, city, pin) VALUES(newName, newSsn, newAdress, newCity, newPin);
 	END IF;
 END //
 
@@ -513,3 +514,4 @@ DELIMITER ;
 -- CALL login(1337, "1111");
 
 CALL fillDB();
+CALL createAccountHolder(1111, "HejPåDig", 1997, "Där" , "Här");

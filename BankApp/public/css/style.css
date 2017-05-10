@@ -272,7 +272,7 @@ a:focus::before, a:hover::before, a:focus::after, a:hover::after {
   border-color: rgba(255,255,255,1);
 }
 
-p{
+footer p{
   color:black;
 
   font-family: 'Oswald', sans-serif;

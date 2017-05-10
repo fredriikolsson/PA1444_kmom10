@@ -495,6 +495,33 @@ CALL getTheNames(nameId);
 
 END // 
 
+-- CREATE PROCEDURE displayUserAccounts (
+-- 	holderId INTEGER
+-- )
+-- BEGIN
+-- 	SET @exists = false;
+-- 	SET @counter = 1;
+--     SET @anAccountList = (SELECT accountList FROM AccountHolder WHERE id = holderId);
+--     SET @accountExists = substring_index(substring_index(@anAccountList, ',', @counter), ',', -1);
+--     SET @lastId = 99999;
+-- 		DROP TABLE IF EXISTS v;
+--         CREATE TABLE v AS SELECT qty, price, qty*price AS value FROM t;
+-- 		WHILE @lastId != @accountExists AND doesExists = FALSE DO
+-- 			IF @accountExists = holderI THEN
+--             SET doesExists = TRUE;
+--             ELSE
+-- 			SET @lastId = @accountExists;
+-- 			SET @counter = @counter + 1;
+-- 			SET @accountExists = (SELECT substring_index(substring_index(@aHolderList, ',', @counter), ',', -1));
+--             END IF;
+-- 		END WHILE;
+-- 
+-- 
+-- SELECT id, balance, holderList FROM BankAccount 
+-- LEFT OUTER JOIN interestTable.value ON interestTable.id LIKE ;
+-- 
+-- END //
+
 -- CREATE Function getNames(
 -- 	nameId INT
 -- ) 
@@ -527,3 +554,5 @@ CALL CalculateInterest(2);
 CALL createAccountHolder(1111, "HejPåDig", 1997, "Där" , "Här");
 INSERT INTO Cashier(id, pin) VALUES(1, 1111);
 INSERT INTO Cashier(id, pin) VALUES(2, 2222);
+
+

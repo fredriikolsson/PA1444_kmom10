@@ -90,7 +90,7 @@ router.post("/redirectUser", (req, res) => {
     res.redirect(`/user/${data.param}`);
 });
 
-router.get("/cashierCreateaccount", (req, res) => {
+router.get("/cashierCreateAccount", (req, res) => {
     var data = {};
 
     data.title = "SOME TITLE";
@@ -100,7 +100,7 @@ router.get("/cashierCreateaccount", (req, res) => {
     database.queryPromise(data.sql)
         .then((result) => {
             data.resultset = result;
-            res.render("cashierCreateaccount", data);
+            res.render("cashierCreateAccount", data);
         })
         .catch((err) => {
             throw err;

@@ -232,14 +232,15 @@ router.get("/owners/:id", (req, res) => {
         });
 });
 
-router.post("/transferAUTH/:id", (req, res) => {
+router.post("/transferAUTH/", (req, res) => {
     var data = {};
-    data.sql = `CALL moveMoney(${req.body.id}, ?, ?, ?)`;
-    data.param = [req.body.from, req.body.to, req.body.ammount];
+    data.sql = `CALL moveMoney(?, ?, ?, ?)`;
+    data.param = [req.body.id ,req.body.from, req.body.to, req.body.ammount];
     database.queryPromise(data.sql, data.param)
-        .then(() => {
-        data.title = "Ammount: " + req.body.ammount + " sent to Account " + req.body.to;
-        res.redirect(`/transfer/${req.body.id}`, data);
+        .then((result) => {
+        console.log(result);
+        var transferStatus = "Ammount: " + req.body.ammount + " sent to Account " + req.body.to;
+        res.redirect(`/transfer/${req.body.id}`);
         })
         .catch((err) => {
             throw err;
@@ -247,15 +248,17 @@ router.post("/transferAUTH/:id", (req, res) => {
 });
 router.get("/transfer/:id", (req, res) => {
     var data = {};
-
+    var transferStatus;
     data.sql = `SELECT id, balance, holderList FROM BankAccount WHERE holderList LIKE ` + `'%${req.params.id}%'` + `;`;
     data.param = [req.params.id];
     data.owner = req.params.id;
-    console.log(data.owner);
     database.queryPromise(data.sql, data.param)
         .then((result) => {
+            if (transferStatus !== null) {
+                data.aMessage = transferStatus;
+            }
             data.accounts = result;
-
+            console.log(data.aMessage);
             res.render("transfer", data);
         })
         .catch((err) => {

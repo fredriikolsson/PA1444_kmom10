@@ -15,9 +15,9 @@ each row, rownum in accounts
         td= row.balance
 
 </table>
-<form class="form-style-4" method="post" action="/transferAUTH/#{owner.id}">
+<form class="form-style-4" method="post" action="/transferAUTH/">
     <label for="field1">
-    <input type="hidden" name="id" value="">
+    <input type="hidden" name="id" value="#{owner}">
     <span>From BankAccount:</span><input type="text" name="from" value="" required="true">
     </label>
     <label for="field2">
@@ -31,7 +31,7 @@ each row, rownum in accounts
     </label>
 </form>
 
-h1= message
+h1= aMessage
 </div>
 include incl/footer.pug
 </div>

@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS AccountHolder;
 DROP TABLE IF EXISTS BankAccount;
 DROP TABLE IF EXISTS AccountLog;
 DROP TABLE IF EXISTS Cashier;
+DROP TABLE IF EXISTS InterestTable;
 
 --
 -- Cashier
@@ -45,6 +46,13 @@ CREATE TABLE IF NOT EXISTS AccountLog (
     timeWhen DATETIME DEFAULT CURRENT_TIMESTAMP,
     accountNumber INTEGER,
     balanceChanged INTEGER
+ );
+ 
+ CREATE TABLE InterestTable (
+	interestId INT AUTO_INCREMENT PRIMARY KEY,
+    value INT,
+    dateFor DATETIME DEFAULT CURRENT_TIMESTAMP,
+    accountNumber INT
  );
 
 DROP TRIGGER IF EXISTS UpdateAccountLog;
@@ -238,7 +246,8 @@ SET i=1;
 WHILE (i <= nrOfElements) DO
 SELECT SUM(balance) into accountValue FROM BankAccount WHERE BankAccount.id = i;
 SET interestValue = ((interestRate * accountValue) / 365);
-INSERT INTO InterestTable(`value`) VALUES(interestValue);
+SET @tempId = (SELECT BankAccount.id FROM BankAccount WHERE id = i);
+INSERT INTO InterestTable(`value`, accountNumber) VALUES(interestValue, @tempId);
 SET i = i + 1;
 
 END WHILE;
@@ -514,4 +523,7 @@ DELIMITER ;
 -- CALL login(1337, "1111");
 
 CALL fillDB();
+SELECT * FROM InterestTable;
+CALL CalculateInterest(2);
+SELECT * FROM InterestTable;
 CALL createAccountHolder(1111, "HejPåDig", 1997, "Där" , "Här");

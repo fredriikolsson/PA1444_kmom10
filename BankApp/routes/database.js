@@ -1,10 +1,10 @@
 "use strict";
- // Hej
+// Hej
 // på dig
 
- // Hej
+// Hej
 
- //med mig
+//med mig
 const express = require("express");
 const router = express.Router();
 const database = require("../database");
@@ -31,14 +31,14 @@ router.post("/loginAUTH", (req, res) => {
     data.param = [req.body.ssn, req.body.pin];
     database.queryPromise(data.sql, data.param)
         .then((result) => {
-        let theResult = result.shift();
-        data.object = {
-            "id": theResult[0].id
-        };
-        console.log(data.object.id);
-        res.redirect(`/user/${data.object.id}`);
-        console.log("Passed redirect");
-    })
+            let theResult = result.shift();
+            data.object = {
+                "id": theResult[0].id
+            };
+            console.log(data.object.id);
+            res.redirect(`/user/${data.object.id}`);
+            console.log("Passed redirect");
+        })
         .catch((err) => {
             throw err;
         });
@@ -47,25 +47,21 @@ router.post("/loginAUTH", (req, res) => {
 router.get("/loginCashier", (req, res) => {
     res.render(`loginCashier`, {
         title: "LoginCashier",
-
     });
 });
-
 router.post("/loginAUTHCashier", (req, res) => {
     var data = {};
     data.sql = `CALL loginCashier(?, ?);`;
     data.param = [req.body.id, req.body.pin];
-    database.queryPromise(data.sql, data.param)
-        .then((result) => {
+    database.queryPromise(data.sql, data.param).then((result) => {
         let theResult = result.shift();
         data.object = {
             "id": theResult[0].id
         };
         res.redirect(`/cashier`);
-    })
-        .catch((err) => {
-            throw err;
-        });
+    }).catch((err) => {
+        throw err;
+    });
 });
 
 router.post("/createAccount", (req, res) => {
@@ -119,12 +115,19 @@ router.get("/cashierCreateAccount", (req, res) => {
 
     data.title = "SOME TITLE";
 
+    //data.sql = `CALL createBankAccount(0,"");`;
+
+
+    res.render("cashierCreateAccount", data);
+});
+
+router.post("/redirectCashier", (req, res) => {
+    var data = {};
     data.sql = `CALL createBankAccount(0,"");`;
 
-    database.queryPromise(data.sql)
-        .then((result) => {
-            data.resultset = result;
-            res.render("cashierCreateAccount", data);
+    database.queryPromise(data.sql, data.param)
+        .then(() => {
+            res.redirect(`/cashier`);
         })
         .catch((err) => {
             throw err;
@@ -140,7 +143,8 @@ router.post("/create", (req, res) => {
     data.sql = `CALL createAccountHolder(?,?,?,?,?);`;
 
     data.param = [req.body.newPin, req.body.newName,
-    req.body.newSsn, req.body.newAdress, req.body.newCity];
+        req.body.newSsn, req.body.newAdress, req.body.newCity
+    ];
     database.queryPromise(data.sql, data.param)
         .then(() => {
             res.redirect(`/createholder`);
@@ -289,7 +293,7 @@ router.get("/user/:id", (req, res) => {
             database.queryPromise(data2.sql, data2.param)
                 .then((result2) => {
                     if (result2.length) {
-                            data.accounts = result2;
+                        data.accounts = result2;
                     }
 
                     res.render("user", data);
@@ -340,10 +344,10 @@ router.post("/swishing", (req, res) => {
     console.log(data.param);
     database.queryPromise(data.sql, data.param)
         .then((result) => {
-        console.log("Starting swish");
-        res.redirect(`/swish`);
-        console.log(result);
-    })
+            console.log("Starting swish");
+            res.redirect(`/swish`);
+            console.log(result);
+        })
         .catch((err) => {
             throw err;
         });
@@ -390,12 +394,12 @@ router.get("/owners/:id", (req, res) => {
 router.post("/transferAUTH/", (req, res) => {
     var data = {};
     data.sql = `CALL moveMoney(?, ?, ?, ?)`;
-    data.param = [req.body.id ,req.body.from, req.body.to, req.body.ammount];
+    data.param = [req.body.id, req.body.from, req.body.to, req.body.ammount];
     database.queryPromise(data.sql, data.param)
         .then((result) => {
-        console.log(result);
-        var transferStatus = "Ammount: " + req.body.ammount + " sent to Account " + req.body.to;
-        res.redirect(`/transfer/${req.body.id}`);
+            console.log(result);
+            var transferStatus = "Ammount: " + req.body.ammount + " sent to Account " + req.body.to;
+            res.redirect(`/transfer/${req.body.id}`);
         })
         .catch((err) => {
             throw err;

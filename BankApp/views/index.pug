@@ -5,13 +5,28 @@ include incl/header.pug
 h1.article-title
 h1= message
 p.article-text
-p  Temporary text:
+<section>
+<p>
+<br>
 
-<p><a href="/login">Login</a></p><p><a href="/createaccount">Create account</a></p>
-<p><a href="/log">Log</a></p>
-p
- <img id="image" class="image" src="/img/spidermaracas.gif">
+</p>
+</section>
+<p>
 
+<br>
+</p>
+<section>
+	<a href="/login" data-hover="Login"><span>Login</span></a>
+	<a href="/createaccount" data-hover="Create Account"><span>Create Account</span></a>
+	<a href="/log" data-hover="Log"><span>Log</span></a>
+</section>
+<p>
+<br>
+<br>
+</p>
+<section>
+<img id="image" class="image" src="/img/spidermaracas.gif">
+</section>
 include incl/footer.pug
 </div>
 </div>
